@@ -1,4 +1,4 @@
-# Smart-Canvas
+# Smart-Campus
 
 Primary Goal: 
 A system that assesses students’ interests, strengths, and career preferences to provide tailored advising services. Backend support would be provided with an online database to provide interconnectivity across applications. The vision is to provide students with a career path that is optimized for success.  Some of the services/features we envision would be: 
