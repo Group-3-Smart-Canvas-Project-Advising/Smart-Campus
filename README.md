@@ -1,19 +1,70 @@
-# Smart-Campus
+# Getting Started with Create React App
 
-Primary Goal: 
-A system that assesses students’ interests, strengths, and career preferences to provide tailored advising services. Backend support would be provided with an online database to provide interconnectivity across applications. The vision is to provide students with a career path that is optimized for success.  Some of the services/features we envision would be: 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
--Elective recommendations that best fit the student’s desired path or preferences. The system could also provide recommendations for a specific professor/class that conforms to the student’s preferred learning style. Such as visual, independent course work, group activities, more/less structured etc. 
+## Available Scripts
 
--Optimized course selection for part-time students or students who want to fast track their degree. Automated descriptions of the time to graduation based on the student’s desired workload. 
+In the project directory, you can run:
 
--Flow chart that shows the prerequisite path for each class and provides a visual depiction of the student’s anticipated degree path. 
+### `npm start`
 
--Detailed description of each class and the content that will be taught. This would use information from the internet or internal documents to build a clear understanding of each class. 
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
--AI integration that provides notifications/reminders for course announcements and due dates. Could also act as a schedule manager so the student can determine the amount of time to allocate and removes the need for constant monitoring of course schedules. 
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
--AI integration that provides tutoring information/external information to assist with the class, topic, or homework. 
+### `npm test`
 
--AI integration that automatically sends summary emails based on generated transcripts from any correspondence such as meetings, online classes, PowerPoints etc. 
- This would act like a virtual note-taking service and allow students to rapidly access information needed for their classes. 
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
