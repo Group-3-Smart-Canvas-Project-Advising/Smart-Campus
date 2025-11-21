@@ -1,5 +1,7 @@
-You can run the app directly in your browser here:
-https://Brandon-Conner.github.io/Group-3-Smart-Canvas-Project-Advising/Smart-Campus
+*** TODO - fix broken link ***
+<!--You can run the app directly in your browser here:
+https://Brandon-Conner.github.io/Group-3-Smart-Canvas-Project-Advising/Smart-Campus-->
+
 
 💻 **Running the Project Locally**
 
