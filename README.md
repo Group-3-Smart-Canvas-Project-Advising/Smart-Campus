@@ -1,3 +1,7 @@
+
+A Branch for an Minimal Viable Product built using React and node.js
+
+
 *** TODO - fix broken link ***
 <!--You can run the app directly in your browser here:
 https://Brandon-Conner.github.io/Group-3-Smart-Canvas-Project-Advising/Smart-Campus-->
@@ -6,6 +10,8 @@ https://Brandon-Conner.github.io/Group-3-Smart-Canvas-Project-Advising/Smart-Cam
 💻 **Running the Project Locally**
 
 If you want to run the app locally instead:
+
+Either clone the repository or download and extract the zip file from the <> code button, then:
 
 1. Install dependencies
 ```
