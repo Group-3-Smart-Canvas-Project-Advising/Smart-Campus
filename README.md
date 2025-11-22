@@ -1,19 +1,16 @@
-# Smart-Campus
+# React + Vite
 
-Primary Goal: 
-A system that assesses students’ interests, strengths, and career preferences to provide tailored advising services. Backend support would be provided with an online database to provide interconnectivity across applications. The vision is to provide students with a career path that is optimized for success.  Some of the services/features we envision would be: 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
--Elective recommendations that best fit the student’s desired path or preferences. The system could also provide recommendations for a specific professor/class that conforms to the student’s preferred learning style. Such as visual, independent course work, group activities, more/less structured etc. 
+Currently, two official plugins are available:
 
--Optimized course selection for part-time students or students who want to fast track their degree. Automated descriptions of the time to graduation based on the student’s desired workload. 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
--Flow chart that shows the prerequisite path for each class and provides a visual depiction of the student’s anticipated degree path. 
+## React Compiler
 
--Detailed description of each class and the content that will be taught. This would use information from the internet or internal documents to build a clear understanding of each class. 
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
--AI integration that provides notifications/reminders for course announcements and due dates. Could also act as a schedule manager so the student can determine the amount of time to allocate and removes the need for constant monitoring of course schedules. 
+## Expanding the ESLint configuration
 
--AI integration that provides tutoring information/external information to assist with the class, topic, or homework. 
-
--AI integration that automatically sends summary emails based on generated transcripts from any correspondence such as meetings, online classes, PowerPoints etc. 
- This would act like a virtual note-taking service and allow students to rapidly access information needed for their classes. 
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
