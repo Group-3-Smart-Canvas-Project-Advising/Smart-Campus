@@ -1,16 +1,55 @@
-# React + Vite
+# Smart Campus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I'm using the Webstorm IDE to develop this so far.
+I know we haven't really discussed too many implementation details,
+but I wanted to get something up and going! It isn't much, just opens
+a browser tab and shows a login screen. If you enter 'user' for the user
+name field and 'password' for the password field, a message should appear
+notifying you of a successful login and it will take you to the login success page(empty right now).
+If anything else is entered into the input fields a notification saying invalid credentials should pop up.
+***
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites
+- Node.js (version X.X or higher)
+- npm or yarn
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Clone the repository:
+```bash
+   git clone 
+   cd 
+```
 
-## Expanding the ESLint configuration
+2. Switch to the development branch (if applicable):
+```bash
+   git checkout 
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. Install dependencies:
+```bash
+   npm install
+```
+
+4. Run the development server:
+```bash
+   npm run dev
+```
+
+5. Open your browser to `http://localhost:5173` (or whatever port)
+
+## Project Structure
+- `/src` - Source code
+- `/src/components` - React components
+- `/src/pages` - Page components
+- `/public` - Static assets
+
+## Common Issues
+- **Blank screen**: Check browser console for errors
+- **Module not found**: Run `npm install` again
+
+## Available Scripts
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
