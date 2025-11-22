@@ -1,48 +1,16 @@
+# React + Vite
 
-A Branch for an Minimal Viable Product built using React and node.js
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+Currently, two official plugins are available:
 
-*** TODO - fix broken link ***
-<!--You can run the app directly in your browser here:
-https://Brandon-Conner.github.io/Group-3-Smart-Canvas-Project-Advising/Smart-Campus-->
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
+## React Compiler
 
-💻 **Running the Project Locally**
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-If you want to run the app locally instead:
+## Expanding the ESLint configuration
 
-Either clone the repository or download and extract the zip file from the <> code button, then:
-
-1. Install dependencies
-```
-npm install
-```
-
-3. Start the development server
-```
-npm start
-```
-
-This runs the app in development mode.
-Open http://localhost:3000
-
-🌐 **Deploying to GitHub Pages**
-
-To deploy your own fork of the project:
-
-Install GitHub Pages:
-```
-npm install --save-dev gh-pages
-```
-Add this to your package.json:
-```
-"homepage": "https://YOUR-USER-NAME.github.io/Group-3-Smart-Canvas-Project-Advising/Smart-Campus",
-"scripts": {
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
-}
-```
-Deploy:
-```
-npm run deploy
-```
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

@@ -1,39 +1,56 @@
-.App {
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    height: 100%; /* Ensure full height for the root elements */
+}
+
+
+#root
+{
+  margin: 0 auto;
   text-align: center;
-  background-color: #282c34;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+
+.background_image
+{
+    display: flex;
+    flex-direction: column;
+    background-image: url('../public/Background_Image.webp');
+    background-size: cover; /* Scale image to fill entire container */
+    background-repeat: no-repeat; /* Optional: Prevent repetition */
+    background-position: center;
+    justify-content: center; /* Centers horizontally */
+    align-items: center;     /* Centers vertically */
+    width: 100vw; /* Fill the entire viewport width */
+    height: 100vh; /* Fill the entire viewport height */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+.login_component_group,
+.login_component_group *
+{
+    box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.login_component_group
+{
+    display: flex;
+    flex-direction: column;
+
+    width: 300px;
+    padding: 2em;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.read-the-docs
+{
+  color: #888;
 }
