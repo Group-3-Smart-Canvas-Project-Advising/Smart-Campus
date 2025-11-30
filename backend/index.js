@@ -8,14 +8,50 @@ const PORT = 3000;
 
 // Allow JSON request bodies
 app.use(express.json());
+
 // Allow the frontend (running on another port) to talk to this API
 app.use(cors());
 
-// ===== "Fake database" in memory =====
-let appointments = [];
-let nextId = 1;
+// ===== "Fake appts" =====
+let appointments = [
+  {
+    id: 1,
+    studentName: 'Demo Student',
+    advisorName: 'Dr. GlaDOS',  
+    startTime: "2025-12-01T15:00:00Z",
+    endTime: "2025-12-01T15:30:00Z",
+    status: 'SCHEDULED'
+  },
+  {
+    id: 2,
+    studentName: 'Meg Rex',
+    advisorName: 'Dr. GlaDOS',
+    startTime: "2025-12-02T18:00:00Z",
+    endTime: "2025-12-02T18:45:00Z",
+    status: 'CONFIRMED'
+  }
+];
+let nextId = 3;
 
-// Just to check the server is alive
+// ===== "Fake users" =====
+const users = [
+  {
+    id: 1,
+    username: "student",
+    password: "password", 
+    role: "student",
+    name: "Demo Student"
+  },
+  {
+    id: 2,
+    username: "advisor",
+    password: "password",
+    role: "advisor",
+    name: "Dr. GlaDOS"
+  }
+];
+
+// Server is aliiiive
 app.get('/', (req, res) => {
   res.send('Smart Advising API is running ✨');
 });
@@ -24,6 +60,38 @@ app.get('/', (req, res) => {
 app.get('/api/appointments', (req, res) => {
   res.json(appointments);
 });
+
+// POST /api/login - validate credentials against dummy users
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({
+      ok: false,
+      message: 'Username and password are required.'
+    });
+  }
+
+  const user = users.find(
+    (u) => u.username === username && u.password === password
+  );
+
+  if (!user) {
+    return res.status(401).json({
+      ok: false,
+      message: 'Invalid username or password.'
+    });
+  }
+
+  // Don’t send password back
+  const { password: _, ...safeUser } = user;
+
+  return res.json({
+    ok: true,
+    user: safeUser
+  });
+});
+
 
 // POST /api/appointments - create a new appointment
 app.post('/api/appointments', (req, res) => {
@@ -82,6 +150,10 @@ app.patch('/api/appointments/:id/status', (req, res) => {
     appointment: appt
   });
 });
+
+
+
+
 
 // Start the server
 app.listen(PORT, () => {
