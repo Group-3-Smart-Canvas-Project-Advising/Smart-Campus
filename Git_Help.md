@@ -307,5 +307,3 @@ git commit
 - ❌ Don't commit sensitive data (passwords, API keys)
 - ❌ Don't force push to shared branches
 - ❌ Don't commit large binary files
-
-Would you like me to explain any specific command in more detail?

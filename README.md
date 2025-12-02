@@ -1,13 +1,18 @@
 # Smart Campus
 
-I'm using the Webstorm IDE to develop this so far.
-I know we haven't really discussed too many implementation details,
-but I wanted to get something up and going! It isn't much, just opens
-a browser tab and shows a login screen. If you enter 'user' for the user
+Currently developing with Webstorm IDE.
+It isn't much, just opens a browser tab and shows a login screen. If you enter 'user' for the user
 name field and 'password' for the password field, a message should appear
 notifying you of a successful login and it will take you to the login success page(empty right now).
 If anything else is entered into the input fields a notification saying invalid credentials should pop up.
+
+I'm going to try and get a link setup so that we can go into 
+the repository and run the app from there!
 ***
+
+
+## Setup
+- WebStorm IDE
 
 
 ## Prerequisites
@@ -22,7 +27,7 @@ If anything else is entered into the input fields a notification saying invalid 
    cd 
 ```
 
-2. Switch to the development branch (if applicable):
+2. Switch to the development branch ( I've been working on the MVP branch, you're welcome to join me or start your own! ):
 ```bash
    git checkout 
 ```

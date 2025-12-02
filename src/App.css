@@ -33,6 +33,13 @@ html, body, #root {
 }
 
 
+.default_profile_image
+{
+    display: flex;
+    flex-direction: column;
+    background-image: url('/public/profile.svg');
+}
+
 .login_component_group,
 .login_component_group *
 {

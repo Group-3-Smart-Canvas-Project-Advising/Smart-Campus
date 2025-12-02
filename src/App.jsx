@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import './App.css'
 import './components/Text_Input_Field.jsx'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import './pages/Successful_Login_Page.jsx'
+import './pages/Student_Account_Home_Page.jsx';
 import Text_Input_Field from "./components/Text_Input_Field.jsx";
 import Login_Button from "./components/Login_Button.jsx";
 
@@ -13,7 +13,7 @@ import Login_Button from "./components/Login_Button.jsx";
 //Create page routes
 const page_routes =
     [
-        { path: '/success', filename: 'Successful_Login_Page' },
+        { path: '/success', filename: 'Student_Account_Home_Page' },
     ];
 
 
@@ -51,9 +51,9 @@ const LoginPage = () => {
             }, 1000));
 
             if (success) {
-                alert('Login successful!');
+                //alert('Login successful!');
                 // Update global user state here if needed
-                navigate('./pages/Successful_Login_Page'); // Navigate to a new page
+                navigate('/success'); // Navigate to a new page
             } else {
                 alert('Invalid username or password.');
                 set_is_loading(false);
@@ -117,9 +117,9 @@ const LoginPage = () => {
                             (
                                 <Route
                                     key = {route.filename}
-                                    path = {route.filename}
+                                    path = {route.path}
                                     element = {React.createElement(componentMap[route.filename])}
-                                    />
+                                />
                             )
                             )
                         }
