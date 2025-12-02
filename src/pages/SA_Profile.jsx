@@ -3,9 +3,8 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Button from "../components/Button.jsx";
 
-const SA_Dashboard = () =>
+const SA_Profile = () =>
 {
-
     const navigate = useNavigate();
 
     return (
@@ -22,4 +21,4 @@ const SA_Dashboard = () =>
     );
 }
 
-export default SA_Dashboard;
+export default SA_Profile;

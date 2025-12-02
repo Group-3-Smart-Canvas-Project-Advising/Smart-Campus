@@ -6,6 +6,10 @@ import './App.css'
 import './components/Text_Input_Field.jsx'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './pages/Student_Account_Home_Page.jsx';
+import './pages/SA_Settings.jsx'
+import './pages/SA_Calendar.jsx'
+import './pages/SA_Dashboard.jsx'
+import './pages/SA_Profile.jsx'
 import Text_Input_Field from "./components/Text_Input_Field.jsx";
 import Login_Button from "./components/Login_Button.jsx";
 
@@ -14,6 +18,10 @@ import Login_Button from "./components/Login_Button.jsx";
 const page_routes =
     [
         { path: '/success', filename: 'Student_Account_Home_Page' },
+        { path: '/settings', filename: 'SA_Settings' },
+        { path: '/calendar', filename: 'SA_Calendar' },
+        { path: '/dashboard', filename: 'SA_Dashboard' },
+        { path: '/profile', filename: 'SA_Profile' },
     ];
 
 
