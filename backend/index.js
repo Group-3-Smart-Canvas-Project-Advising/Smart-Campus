@@ -1,4 +1,4 @@
-// index.js - super tiny Smart Advising backend
+
 
 const express = require('express');
 const cors = require('cors');
@@ -6,10 +6,13 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
+const DATA_MODE = process.env.DATA_MODE || 'mock';
+const useDb = DATA_MODE === 'db';
+
 // Allow JSON request bodies
 app.use(express.json());
 
-// Allow the frontend (running on another port) to talk to this API
+// Allow the frontend to talk to this API
 app.use(cors());
 
 // ===== "Fake appts" =====
@@ -56,13 +59,31 @@ app.get('/', (req, res) => {
   res.send('Smart Advising API is running ✨');
 });
 
-// GET /api/appointments - list all appointments
-app.get('/api/appointments', (req, res) => {
-  res.json(appointments);
+// GET /api/appointments
+app.get('/api/appointments', async (req, res) => {
+  try {
+    if (useDb) {
+      // TODO: GetAppointmentsForUser
+
+      return res.status(501).json({
+        ok: false,
+        message: 'DB appointments listing not implemented yet (DATA_MODE=db).'
+      });
+    } else {
+      // ---- MOCK MODE ----
+      res.json(appointments);
+    }
+  } catch (error) {
+    console.error('Get appointments error:', error);
+    res.status(500).json({
+      ok: false,
+      message: 'Could not load appointments.'
+    });
+  }
 });
 
 // POST /api/login - validate credentials against dummy users
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
@@ -72,32 +93,49 @@ app.post('/api/login', (req, res) => {
     });
   }
 
-  const user = users.find(
-    (u) => u.username === username && u.password === password
-  );
+  try {
+    if (useDb) {
+      // TODO: LoginUser stored procedure here.
 
-  if (!user) {
-    return res.status(401).json({
+
+      return res.status(501).json({
+        ok: false,
+        message: 'DB login not implemented yet (DATA_MODE=db).'
+      });
+    } else {
+      // ---- MOCK MODE ----
+      const user = users.find(
+        (u) => u.username === username && u.password === password
+      );
+
+      if (!user) {
+        return res.status(401).json({
+          ok: false,
+          message: 'Invalid username or password.'
+        });
+      }
+
+      const { password: _, ...safeUser } = user;
+
+      return res.json({
+        ok: true,
+        user: safeUser
+      });
+    }
+  } catch (error) {
+    console.error('Login failed:', error);
+    return res.status(500).json({
       ok: false,
-      message: 'Invalid username or password.'
+      message: 'Login failed due to server error.'
     });
   }
-
-  // Don’t send password back
-  const { password: _, ...safeUser } = user;
-
-  return res.json({
-    ok: true,
-    user: safeUser
-  });
 });
 
 
-// POST /api/appointments - create a new appointment
-app.post('/api/appointments', (req, res) => {
+// POST /api/appointments - Create a new appointment
+app.post('/api/appointments', async (req, res) => {
   const { studentName, advisorName, startTime, endTime } = req.body;
 
-  // Basic validation
   if (!studentName || !advisorName || !startTime || !endTime) {
     return res.status(400).json({
       ok: false,
@@ -105,25 +143,43 @@ app.post('/api/appointments', (req, res) => {
     });
   }
 
-  const newAppointment = {
-    id: nextId++,
-    studentName,
-    advisorName,
-    startTime,
-    endTime,
-    status: 'SCHEDULED'
-  };
+  try {
+    if (useDb) {
+      // TODO: CreateAppointment in DB
 
-  appointments.push(newAppointment);
+      return res.status(501).json({
+        ok: false,
+        message: 'DB appointment creation not implemented yet (DATA_MODE=db).'
+      });
+    } else {
+      // ---- MOCK MODE ----
+      const newAppointment = {
+        id: nextId++,
+        studentName,
+        advisorName,
+        startTime,
+        endTime,
+        status: 'SCHEDULED'
+      };
 
-  res.status(201).json({
-    ok: true,
-    appointment: newAppointment
-  });
+      appointments.push(newAppointment);
+
+      res.status(201).json({
+        ok: true,
+        appointment: newAppointment
+      });
+    }
+  } catch (error) {
+    console.error('Create appointment error:', error);
+    res.status(500).json({
+      ok: false,
+      message: 'Could not create appointment.'
+    });
+  }
 });
 
 // PATCH /api/appointments/:id/status - update status (e.g., CONFIRMED, CANCELED)
-app.patch('/api/appointments/:id/status', (req, res) => {
+app.patch('/api/appointments/:id/status', async (req, res) => {
   const id = Number(req.params.id);
   const { status } = req.body;
 
@@ -135,25 +191,38 @@ app.patch('/api/appointments/:id/status', (req, res) => {
     });
   }
 
-  const appt = appointments.find(a => a.id === id);
-  if (!appt) {
-    return res.status(404).json({
+  try {
+    if (useDb) {
+      // TODO: Update status in DB.
+      return res.status(501).json({
+        ok: false,
+        message: 'DB status update not implemented yet (DATA_MODE=db).'
+      });
+    } else {
+      // ---- MOCK MODE ----
+      const appt = appointments.find(a => a.id === id);
+      if (!appt) {
+        return res.status(404).json({
+          ok: false,
+          message: 'Appointment not found'
+        });
+      }
+
+      appt.status = status;
+
+      res.json({
+        ok: true,
+        appointment: appt
+      });
+    }
+  } catch (error) {
+    console.error('Update status error:', error);
+    res.status(500).json({
       ok: false,
-      message: 'Appointment not found'
+      message: 'Could not update appointment status.'
     });
   }
-
-  appt.status = status;
-
-  res.json({
-    ok: true,
-    appointment: appt
-  });
 });
-
-
-
-
 
 // Start the server
 app.listen(PORT, () => {
