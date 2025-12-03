@@ -1,0 +1,40 @@
+Frontend Feature List
+•	Add toast-style success/error notifications instead of alerts.
+•	Add a logout confirmation modal.
+•	Create placeholder routes/pages ( /profile, /settings, /advisor-tools).
+•	Improve login page styling (background, layout, show/hide password).
+•	Add a status dropdown next to each appointment for advisors (updates via PATCH).
+•	Add a conflict warning popup when a student tries to book overlapping appointments.
+•	Show academic holds on dashboard with icons and explanations.
+•	Add a “Degree Progress” card using mock GPA + credit info.
+•	Add a “Reason for Appointment” dropdown in the create appointment.
+•	Add a “Filter Appointments by Status” component (Upcoming | Completed | Canceled).
+•	Display advisor availability on a small calendar or list UI.
+•	Add student alerts (“You have a registration hold”, “You have 2 upcoming appointments”).
+•	Create an “Advisee List” page for advisors populated from mock student records.
+
+Backend Feature List
+•	Add DELETE /api/appointments/:id to remove an appointment.
+•	Add PATCH /api/users/:id/role to change student/advisor roles.
+•	Add appointment filtering using query params
+•	Add PATCH /api/appointments/:id/status UI integration so advisors can update appointment status (Confirmed, Completed, Canceled, No-Show).
+•	Add backend function to detect scheduling conflicts for a student or advisor (simple time overlap check).
+•	Add GET /api/holds/:studentId to return mock academic holds (later hooked to real DB).
+•	Add GET /api/records/:studentId to return mock academic records (GPA, completed credits, etc.).
+•	Add GET /api/advisors/:id/availability to return mock advisor availability windows.
+•	Add POST /api/advisors/:id/availability to allow advisors to add/edit availability.
+•	Add mock middleware to block booking if a student has active holds.
+•	Add appointment “reason” field (e.g., graduation check, course planning) with validation.
+•	Add simple audit logging of appointment changes (stored in a mock in-memory array).
+
+Shared/General Features
+•	Cosmetic/Formatting Stuff
+•	Toggle to switch between mock & future sql backend?
+•	Add helper utility that checks datetime overlap between two appointments.
+•	Add a reusable <StatusBadge> UI component with color-coded states.
+•	Add a notification/alert system that works across all pages.
+•	Add mock academic record generator (random GPA, major, advisor, credits).
+•	Add a “Blocked due to hold” UI flow where students cannot book appointments until resolved.
+•	Add a “Notes” field for advisors to write post-meeting summaries.
+•	Add appointment sorting (by date, by status, by student).
+•	Add advisor’s daily schedule view.
