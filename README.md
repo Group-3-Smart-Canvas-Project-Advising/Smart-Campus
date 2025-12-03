@@ -1,13 +1,11 @@
 # Smart Campus
 
 Currently developing with Webstorm IDE.
-It isn't much, just opens a browser tab and shows a login screen. If you enter 'user' for the user
-name field and 'password' for the password field, a message should appear
-notifying you of a successful login and it will take you to the login success page(empty right now).
-If anything else is entered into the input fields a notification saying invalid credentials should pop up.
 
-I'm going to try and get a link setup so that we can go into 
-the repository and run the app from there!
+Main login page with 'username' and 'password' input fields, and submit button
+When user types 'user' and 'password' into respective input fields, navigates to student account page.
+Includes mock A.I. prompt bubble and hamburger menu with navigation to 'Calendar', 'Dashboard', 'Profile', 'Settings' pages(currently empty)
+
 ***
 
 
