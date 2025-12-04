@@ -2,7 +2,10 @@
 
 Currently developing with Webstorm IDE.
 
-Main login page with 'username' and 'password' input fields, and submit button
+To Login 
+- as mock student enter 'student' and 'password'
+- as mock advisor enter 'advisor' and 'password'
+
 When user types 'user' and 'password' into respective input fields, navigates to student account page.
 Includes mock A.I. prompt bubble and hamburger menu with navigation to 'Calendar', 'Dashboard', 'Profile', 'Settings' pages(currently empty)
 
