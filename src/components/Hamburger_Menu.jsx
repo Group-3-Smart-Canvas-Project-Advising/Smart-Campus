@@ -31,8 +31,9 @@ const Hamburger_Menu = () => {
 
             <nav className={`menu ${isOpen ? 'open' : ''}`}>
                 <ul>
-                    <li><Link to="/" onClick={closeMenu}>Home</Link></li>
+                    <li><Link to="/student_home" onClick={closeMenu}>Home</Link></li>
                     <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>
+                    <li><Link to="/calendar" onClick={closeMenu}>Calendar</Link></li>
                     <li><Link to="/profile" onClick={closeMenu}>Profile</Link></li>
                     <li><Link to="/settings" onClick={closeMenu}>Settings</Link></li>
                     <li><Link to="/" onClick={closeMenu}>Logout</Link></li>

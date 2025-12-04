@@ -1,10 +1,11 @@
 const Button = ({
                     on_click_handler,
                     is_disabled = false,
-                    text = "Click Me",
+                    text = "Disabled",
                     loading_text = "Loading...",
                     type = "button",
-                    className = "button"
+                    className = "button",
+                    style = {}
                 }) =>
 {
     return (
@@ -13,6 +14,7 @@ const Button = ({
             onClick={on_click_handler}
             className={className}
             disabled={is_disabled}
+            style={style}
         >
             {is_disabled ? loading_text : text}
         </button>

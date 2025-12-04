@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
 
-export default function Dashboard({ user, onLogout }) {
+export default function Dashboard({ user}) {
   const navigate = useNavigate();
   const name = user?.name || user?.username || "User";
   const role = user?.role || "student";
@@ -24,11 +25,6 @@ export default function Dashboard({ user, onLogout }) {
   const [createError, setCreateError] = useState("");
   const [showCreateForm, setShowCreateForm] = useState(false);
 
-  // ---- logout ----
-  const handleLogout = () => {
-    if (onLogout) onLogout();
-    navigate("/");
-  };
 
   // Optional: if user is totally missing (e.g. refresh on /dashboard), kick back to login
   useEffect(() => {
@@ -133,6 +129,7 @@ export default function Dashboard({ user, onLogout }) {
             <h1>Advising Dashboard</h1>
             <p>
               Welcome back, {name} {role === "advisor" ? "🧑‍🏫" : "🎓"}
+
             </p>
           </div>
 
@@ -143,9 +140,7 @@ export default function Dashboard({ user, onLogout }) {
               </span>
               <span className="badge badge-muted">Demo mode</span>
             </div>
-            <button className="logout-button" onClick={handleLogout}>
-              Log out
-            </button>
+            <Hamburger_Menu/>
           </div>
         </header>
 

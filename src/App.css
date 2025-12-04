@@ -98,7 +98,9 @@ html, body, #root {
 }
 
 .dashboard-badges {
-  display: flex;
+  display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
   gap: 0.5rem;
   align-items: center;
 }
@@ -214,6 +216,7 @@ html, body, #root {
   opacity: 0.7;
   cursor: default;
 }
+
 
 /* Optional: appointments form styling (if not added before) */
 .appt-form {

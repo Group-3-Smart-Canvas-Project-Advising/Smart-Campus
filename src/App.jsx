@@ -8,7 +8,11 @@ import Dashboard from "./pages/Dashboard.jsx";
 
 // Only keep routes that actually use lazy loading
 const page_routes = [
-  { path: "/success", filename: "Successful_Login_Page" },
+    { path: '/student_home', filename: 'Student_Account_Home_Page' },
+    { path: '/settings', filename: 'SA_Settings' },
+    { path: '/calendar', filename: 'SA_Calendar' },
+    { path: '/dashboard', filename: 'Dashboard' },
+    { path: '/profile', filename: 'SA_Profile' },
 ];
 
 // Create a map of lazy-loaded components
@@ -55,7 +59,7 @@ const LoginPage = ({ onLogin }) => {
         if (onLogin) {
           onLogin(data.user); // store user (with role)
         }
-        navigate("/dashboard");
+        navigate("/student_home");
       } else {
         alert("Unexpected response from server.");
         set_is_loading(false);
@@ -109,6 +113,7 @@ const LoginPage = ({ onLogin }) => {
 };
 
 const App = () => {
+
   const [user, setUser] = useState(null);
 
   const handleLogout = () => {
@@ -141,5 +146,6 @@ const App = () => {
     </BrowserRouter>
   );
 };
+
 
 export default App;

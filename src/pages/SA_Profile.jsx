@@ -1,21 +1,29 @@
-import React from 'react'
+import React from 'react';
+import './SA_Profile.css';
 
-import { Link, useNavigate } from 'react-router-dom';
-import Button from "../components/Button.jsx";
+import ProfileIcon from '/profile.svg';
+
+import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
 
 const SA_Profile = () =>
 {
-    const navigate = useNavigate();
+
 
     return (
 
         <div className={'background_image'}>
 
-            <Button
-                text={'Log out'}
-                on_click_handler = {() => navigate('/')}
-                Logout
-            />
+            <Hamburger_Menu/>
+
+            <h2>
+                Profile
+            </h2>
+
+
+
+            <div>
+                <img src={ProfileIcon} alt="Profile" />
+            </div>
 
         </div>
     );
