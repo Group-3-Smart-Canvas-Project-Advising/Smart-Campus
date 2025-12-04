@@ -2,7 +2,6 @@
 import React from 'react'
 
 
-import Button from "../components/Button.jsx";
 import AI_Prompt_Field from "../components/AI_Prompt_Field.jsx";
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
 
