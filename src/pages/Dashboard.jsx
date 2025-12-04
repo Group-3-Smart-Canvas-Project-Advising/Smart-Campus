@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useUser } from "../context/UserContext.jsx";
+import { create as createAppt } from "../api/appointments.js";
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
 
 export default function Dashboard({ user}) {
@@ -8,8 +10,8 @@ export default function Dashboard({ user}) {
   const role = user?.role || "student";
 
   // ---- appointment list state ----
-  const [appointments, setAppointments] = useState([]);
-  const [loadingAppts, setLoadingAppts] = useState(true);
+  const { appointments, setAppointments, isDataLoading } = useUser();
+  const [loadingAppts, setLoadingAppts] = useState(false);
   const [apptsError, setApptsError] = useState("");
 
   // ---- create appointment form state ----
@@ -33,30 +35,7 @@ export default function Dashboard({ user}) {
     }
   }, [user, navigate]);
 
-  // ---- fetch appointments on mount ----
-  useEffect(() => {
-    async function loadAppointments() {
-      try {
-        setLoadingAppts(true);
-        setApptsError("");
-
-        const res = await fetch("http://localhost:3000/api/appointments");
-        if (!res.ok) {
-          throw new Error(`Server error: ${res.status}`);
-        }
-
-        const data = await res.json();
-        setAppointments(data);
-      } catch (err) {
-        console.error(err);
-        setApptsError("Could not load appointments. Is the backend running?");
-      } finally {
-        setLoadingAppts(false);
-      }
-    }
-
-    loadAppointments();
-  }, []);
+  // No local fetching here; App.jsx loads appointments after login into UserContext
 
   // ---- filter appointments based on role ----
   const visibleAppointments = appointments.filter((appt) => {
@@ -80,31 +59,11 @@ export default function Dashboard({ user}) {
 
     try {
       setCreating(true);
-
-      const res = await fetch("http://localhost:3000/api/appointments", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          studentName,
-          advisorName,
-          startTime,
-          endTime,
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error(`Server error: ${res.status}`);
-      }
-
-      const data = await res.json();
-      if (data.ok && data.appointment) {
-        setAppointments((prev) => [...prev, data.appointment]);
-        setStartTime("");
-        setEndTime("");
-        // keep names for convenience
-      } else {
-        setCreateError("Unexpected response from server.");
-      }
+      const saved = await createAppt({ studentName, advisorName, startTime, endTime });
+      if (!saved) throw new Error("No appointment returned");
+      setAppointments((prev) => [...prev, saved]);
+      setStartTime("");
+      setEndTime("");
     } catch (err) {
       console.error(err);
       setCreateError("Could not create appointment.");
@@ -121,7 +80,7 @@ export default function Dashboard({ user}) {
   };
 
   return (
-    <div className="dashboard">
+    <div className="dashboard" aria-busy={isDataLoading ? "true" : undefined}>
       {/* Sticky top shell: header + quick links */}
       <div className="dashboard-shell">
         <header className="dashboard-header">
@@ -147,12 +106,13 @@ export default function Dashboard({ user}) {
         <nav className="dashboard-nav">
           <span className="nav-label">Quick links</span>
           <div className="nav-quick-links">
-            <button className="nav-pill" onClick={scrollToAppointments}>
+            <button className="nav-pill" onClick={scrollToAppointments} disabled={isDataLoading}>
               📅 Upcoming appointments
             </button>
             <button
               className="nav-pill"
               onClick={() => setShowCreateForm(true)}
+              disabled={isDataLoading}
             >
               ➕ New appointment
             </button>
@@ -194,6 +154,7 @@ export default function Dashboard({ user}) {
               className="primary-button"
               type="button"
               onClick={() => setShowCreateForm((prev) => !prev)}
+              disabled={isDataLoading}
             >
               {showCreateForm ? "Close form" : "New appointment"}
             </button>
@@ -265,6 +226,7 @@ export default function Dashboard({ user}) {
                     type="text"
                     value={studentName}
                     onChange={(e) => setStudentName(e.target.value)}
+                    disabled={isDataLoading || creating}
                   />
                 </label>
               </div>
@@ -277,6 +239,7 @@ export default function Dashboard({ user}) {
                     type="text"
                     value={advisorName}
                     onChange={(e) => setAdvisorName(e.target.value)}
+                    disabled={isDataLoading || creating}
                   />
                 </label>
               </div>
@@ -289,6 +252,7 @@ export default function Dashboard({ user}) {
                     type="datetime-local"
                     value={startTime}
                     onChange={(e) => setStartTime(e.target.value)}
+                    disabled={isDataLoading || creating}
                   />
                 </label>
 
@@ -299,6 +263,7 @@ export default function Dashboard({ user}) {
                     type="datetime-local"
                     value={endTime}
                     onChange={(e) => setEndTime(e.target.value)}
+                    disabled={isDataLoading || creating}
                   />
                 </label>
               </div>
@@ -310,10 +275,10 @@ export default function Dashboard({ user}) {
               <button
                 type="submit"
                 className="primary-button"
-                disabled={creating}
+                disabled={creating || isDataLoading}
                 style={{ marginTop: "0.75rem" }}
               >
-                {creating ? "Saving…" : "Save appointment"}
+                {creating ? "Saving…" : isDataLoading ? "Loading…" : "Save appointment"}
               </button>
             </form>
           )}

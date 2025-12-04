@@ -48,6 +48,8 @@ html, body, #root {
         transparent 70%
     );
     z-index: 0;
+    /* Ensure this decorative layer never intercepts clicks */
+    pointer-events: none;
     filter: blur(30px);
     animation: slow-spin 22s linear infinite;
 }
