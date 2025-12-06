@@ -31,6 +31,7 @@ const LoginPage = ({ onLogin }) => {
   const [Username, set_Username] = useState("");
   const [password, set_Password] = useState("");
   const [is_loading, set_is_loading] = useState(false);
+  const [useServerMode, setUseServerMode] = useState(false); // false = mock, true = server
   const navigate = useNavigate();
 
   const handle_login_submit = async (event) => {
@@ -44,6 +45,7 @@ const LoginPage = ({ onLogin }) => {
         body: JSON.stringify({
           username: Username,
           password: password,
+          mode: useServerMode ? 'db' : 'mock',
         }),
       });
 
@@ -108,6 +110,59 @@ const LoginPage = ({ onLogin }) => {
                 on_click_handler={handle_login_submit}
                 is_disabled={is_loading}
               />
+            </div>
+
+            {/* Mode Toggle */}
+            <div style={{ 
+              padding: "8px", 
+              display: "flex", 
+              alignItems: "center", 
+              justifyContent: "center",
+              gap: "12px"
+            }}>
+              <label style={{ 
+                color: "#e5e7eb", 
+                fontSize: "0.85rem",
+                cursor: "pointer",
+                userSelect: "none"
+              }}>
+                Mock Mode
+              </label>
+              <div
+                onClick={() => setUseServerMode(!useServerMode)}
+                style={{
+                  position: "relative",
+                  width: "50px",
+                  height: "26px",
+                  backgroundColor: useServerMode ? "#38bdf8" : "rgba(148, 163, 184, 0.5)",
+                  borderRadius: "13px",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease",
+                  border: "1px solid rgba(148, 163, 184, 0.3)"
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "2px",
+                    left: useServerMode ? "26px" : "2px",
+                    width: "20px",
+                    height: "20px",
+                    backgroundColor: "#fff",
+                    borderRadius: "50%",
+                    transition: "left 0.3s ease",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)"
+                  }}
+                />
+              </div>
+              <label style={{ 
+                color: "#e5e7eb", 
+                fontSize: "0.85rem",
+                cursor: "pointer",
+                userSelect: "none"
+              }}>
+                Server Mode
+              </label>
             </div>
           </div>
         </div>

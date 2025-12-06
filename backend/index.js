@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
@@ -8,6 +8,10 @@ const PORT = 3000;
 
 const DATA_MODE = process.env.DATA_MODE || 'mock';
 const useDb = DATA_MODE === 'db';
+
+// top of file
+const { query, sql } = require('./db');
+
 
 // Allow JSON request bodies
 app.use(express.json());
@@ -57,6 +61,8 @@ const users = [
 // Server is aliiiive
 app.get('/', (req, res) => {
   res.send('Smart Advising API is running ✨');
+  if (useDb)
+    console.log("Database Connected");
 });
 
 // GET /api/appointments
@@ -84,7 +90,7 @@ app.get('/api/appointments', async (req, res) => {
 
 // POST /api/login - validate credentials against dummy users
 app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, mode } = req.body;
 
   if (!username || !password) {
     return res.status(400).json({
@@ -93,15 +99,72 @@ app.post('/api/login', async (req, res) => {
     });
   }
 
+  // Use mode from request if provided, otherwise fall back to environment variable
+  const requestMode = mode || DATA_MODE;
+  const useRequestDb = requestMode === 'db';
+
   try {
-    if (useDb) {
-      // TODO: LoginUser stored procedure here.
+    if (useRequestDb) {
+      // Database mode: Query AppUser table for matching credentials
+      try {
+        const result = await query(
+          `SELECT TOP 1 [UserId], [Username], [DisplayName]
+           FROM [AppUser]
+           WHERE [Username] = @username AND [PasswordHash] = @password`,
+          [
+            { name: 'username', value: username },
+            { name: 'password', value: password }
+          ]
+        );
 
+        if (!result.recordset || result.recordset.length === 0) {
+          return res.status(401).json({
+            ok: false,
+            message: 'Invalid username or password.'
+          });
+        }
 
-      return res.status(501).json({
-        ok: false,
-        message: 'DB login not implemented yet (DATA_MODE=db).'
-      });
+        const user = result.recordset[0];
+        
+        // Determine role by checking Advisor and Student tables
+        let role = 'User';
+        try {
+          const advisorCheck = await query(
+            `SELECT TOP 1 1 FROM [Advisor] WHERE [UserId] = @userId`,
+            [{ name: 'userId', value: user.UserId }]
+          );
+          if (advisorCheck.recordset && advisorCheck.recordset.length > 0) {
+            role = 'advisor';
+          } else {
+            const studentCheck = await query(
+              `SELECT TOP 1 1 FROM [Student] WHERE [UserId] = @userId`,
+              [{ name: 'userId', value: user.UserId }]
+            );
+            if (studentCheck.recordset && studentCheck.recordset.length > 0) {
+              role = 'student';
+            }
+          }
+        } catch (roleErr) {
+          console.log('Could not determine role from related tables, using default');
+        }
+        
+        return res.json({
+          ok: true,
+          user: {
+            id: user.UserId,
+            username: user.Username,
+            role: role,
+            name: user.DisplayName
+          }
+        });
+      } catch (err) {
+        console.error('Database login error:', err);
+        return res.status(500).json({
+          ok: false,
+          message: 'Login failed due to database error.',
+          error: String(err)
+        });
+      }
     } else {
       // ---- MOCK MODE ----
       const user = users.find(

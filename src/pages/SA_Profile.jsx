@@ -13,6 +13,16 @@ const SA_Profile = () =>
 
         <div className={'background_image'}>
 
+            <div className="dashboard-header-right" >
+                <div className="dashboard-badges">
+                    <span className="badge badge-primary">
+                        {role === "advisor" ? "Advisor" : "Student"}
+                    </span>
+                    <span className="badge badge-muted">Demo mode</span>
+
+                </div>
+            </div>
+
             <Hamburger_Menu/>
 
             <h2>

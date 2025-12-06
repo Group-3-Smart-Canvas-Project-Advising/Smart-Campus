@@ -1,7 +1,7 @@
 Frontend Feature List
 •	Add toast-style success/error notifications instead of alerts.
 •	Add a logout confirmation modal.
-•	Create placeholder routes/pages ( /profile, /settings, /advisor-tools).
+•	-COMPLETE- Create placeholder routes/pages ( /profile, /settings, /advisor-tools). -COMPLETE-
 •	-COMPLETE - Improve login page styling (background, layout, show/hide password). -COMPLETE
 •	Add a status dropdown next to each appointment for advisors (updates via PATCH).
 •	Add a conflict warning popup when a student tries to book overlapping appointments.

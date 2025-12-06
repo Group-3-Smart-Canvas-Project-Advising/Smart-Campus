@@ -155,7 +155,17 @@ const SA_Calendar = () => {
       <div className="calendar-inner" aria-busy={isDataLoading ? 'true' : undefined}>
         <div className="cal-header">
           <Avatar size={40} sticky />
-          <Hamburger_Menu />
+            <div className="dashboard-header-right" >
+                <div className="dashboard-badges">
+                    <span className="badge badge-primary">
+                        {role === "advisor" ? "Advisor" : "Student"}
+                    </span>
+                    <span className="badge badge-muted">Demo mode</span>
+
+                </div>
+                <Hamburger_Menu/>
+            </div>
+
         </div>
 
         <h2 className="cal-title">Calendar</h2>
