@@ -1,58 +1,106 @@
 // Frontend API facade for appointments
-// Backend-agnostic: only this file knows base URL and wire format.
 
 const BASE = (import.meta && import.meta.env && import.meta.env.VITE_API_BASE_URL)
   ? import.meta.env.VITE_API_BASE_URL
-  : 'http://localhost:3000';
+  : "http://localhost:3000";
 
+// Normalize both mock objects and DB records into the shape the UI expects.
 const normalize = (r = {}) => ({
-  id: r.id,
-  studentName: r.studentName,
-  advisorName: r.advisorName,
-  startTime: r.startTime,
-  endTime: r.endTime,
-  status: r.status ?? 'SCHEDULED',
+  id:
+    r.id ??
+    r.AppointmentId ??
+    r.appointmentId ??
+    null,
+  studentName:
+    r.studentName ??
+    r.StudentName ??
+    r.student_name ??
+    "",                   
+  advisorName:
+    r.advisorName ??
+    r.AdvisorName ??
+    r.advisor_name ??
+    "",
+  startTime:
+    r.startTime ??
+    r.StartTimeUtc ??
+    r.start_time ??
+    null,
+  endTime:
+    r.endTime ??
+    r.EndTimeUtc ??
+    r.end_time ??
+    null,
+  status:
+    r.status ??
+    r.StatusCode ??
+    "SCHEDULED",
 });
 
 // List appointments relevant to the current user.
-// user: { username, name, role }
-// For now: fetch all and filter client-side to match current mock backend.
-// Later: switch to server-side filtering (e.g., /api/appointments?student=... or ?advisor=...).
+// In DB mode, backend is already filtering by user, so we DO NOT filter again here.
 export async function listForUser(user) {
-  const res = await fetch(`${BASE}/api/appointments`);
+  if (!user) return [];
+
+  const params = new URLSearchParams();
+  if (user.role) params.set("role", user.role);
+  if (user.id != null) params.set("userId", String(user.id));
+  if (user.mode) params.set("mode", user.mode);
+
+  const url = `${BASE}/api/appointments?${params.toString()}`;
+  console.log("listForUser →", url);
+
+  const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const all = await res.json();
 
-  if (!Array.isArray(all)) return [];
+  const body = await res.json();
+  console.log("listForUser body:", body);
 
-  const { role, username, name } = user || {};
-  const mine = role === 'advisor'
-    ? all.filter(a => a.advisorName === name)
-    : all.filter(a => a.studentName === username);
+  let rawList;
+  if (Array.isArray(body)) {
+    rawList = body;
+  } else if (Array.isArray(body.appointments)) {
+    rawList = body.appointments;
+  } else {
+    rawList = [];
+  }
 
-  return mine.map(normalize);
+  return rawList.map(normalize);
 }
 
 // Create a new appointment
 // appt: { studentName, advisorName, startTime, endTime, status? }
-export async function create(appt) {
+// user: { id, role, mode, ... }
+export async function create(appt, user) {
+  const body = { ...appt };
+
+  if (user?.id != null) body.userId = user.id;
+  if (user?.role) body.role = user.role;
+  if (user?.mode) body.mode = user.mode;
+
+  console.log("create() payload:", body);
+
   const res = await fetch(`${BASE}/api/appointments`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(appt),
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
   });
+
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json();
   const created = data && (data.appointment ?? data);
   return normalize(created);
 }
 
-// Update appointment status
-export async function updateStatus(id, status) {
+// Update appointment status – for advisor-only future feature
+export async function updateStatus(id, status, user) {
+  const body = { status };
+  if (user?.mode) body.mode = user.mode;
+
   const res = await fetch(`${BASE}/api/appointments/${id}/status`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ status }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json();

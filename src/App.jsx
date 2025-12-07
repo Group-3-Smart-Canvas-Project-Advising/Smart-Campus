@@ -61,9 +61,14 @@ const LoginPage = ({ onLogin }) => {
 
       const data = await res.json();
       if (data.ok && data.user) {
+        const loginMode = useServerMode ? "db" : "mock";
+
         if (onLogin) {
-          // Ensure username from input is retained if backend doesn't echo it
-          onLogin({ ...data.user, username: data.user?.username ?? Username });
+          onLogin({
+            ...data.user,
+            username: data.user?.username ?? Username,
+            mode: loginMode     
+          });
         }
         navigate("/student_home");
       } else {
@@ -195,8 +200,7 @@ const App = () => {
       } catch (e) {
         console.error("Failed to load appointments for user:", e);
         if (!aborted) setAppointments([]);
-      }
-      finally {
+      } finally {
         if (!aborted) setIsDataLoading(false);
       }
     }

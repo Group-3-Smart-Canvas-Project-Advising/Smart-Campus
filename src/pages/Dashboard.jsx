@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext.jsx";
-import { create as createAppt } from "../api/appointments.js";
+import { create as createAppt, updateStatus } from "../api/appointments.js";
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
 
 export default function Dashboard({ user}) {
@@ -10,7 +10,8 @@ export default function Dashboard({ user}) {
   const role = user?.role || "student";
 
   // ---- appointment list state ----
-  const { appointments, setAppointments, isDataLoading } = useUser();
+  const { user: ctxUser, appointments, setAppointments, isDataLoading } = useUser();
+  const effectiveUser = user ?? ctxUser; // prefer prop, fallback to context
   const [loadingAppts, setLoadingAppts] = useState(false);
   const [apptsError, setApptsError] = useState("");
 
@@ -37,15 +38,8 @@ export default function Dashboard({ user}) {
 
   // No local fetching here; App.jsx loads appointments after login into UserContext
 
-  // ---- filter appointments based on role ----
-  const visibleAppointments = appointments.filter((appt) => {
-    if (role === "student") {
-      return appt.studentName === name;
-    } else if (role === "advisor") {
-      return appt.advisorName === name;
-    }
-    return true;
-  });
+  // Filtered appointments to show in table
+  const visibleAppointments = appointments;
 
   // ---- create new appointment ----
   const handleCreateAppointment = async (e) => {
@@ -59,7 +53,7 @@ export default function Dashboard({ user}) {
 
     try {
       setCreating(true);
-      const saved = await createAppt({ studentName, advisorName, startTime, endTime });
+      const saved = await createAppt({ studentName, advisorName, startTime, endTime }, effectiveUser);
       if (!saved) throw new Error("No appointment returned");
       setAppointments((prev) => [...prev, saved]);
       setStartTime("");
@@ -203,7 +197,34 @@ export default function Dashboard({ user}) {
                           ? new Date(appt.endTime).toLocaleString()
                           : "—"}
                       </td>
-                      <td>{appt.status}</td>
+                      <td>
+                        {role === "advisor" ? (
+                          <select
+                            value={appt.status}
+                            onChange={async (e) => {
+                              const newStatus = e.target.value;
+                              try {
+                                const updated = await updateStatus(appt.id, newStatus, effectiveUser);
+                                setAppointments((prev) =>
+                                  prev.map((a) => (a.id === updated.id ? updated : a))
+                                );
+                              } catch (err) {
+                                console.error("Failed to update status:", err);
+                                // optional: toast or error message
+                              }
+                            }}
+                            disabled={isDataLoading}
+                          >
+                            <option value="SCHEDULED">Scheduled</option>
+                            <option value="CONFIRMED">Confirmed</option>
+                            <option value="COMPLETED">Completed</option>
+                            <option value="NOSHOW">No-show</option>
+                            <option value="CANCELED">Canceled</option>
+                          </select>
+                        ) : (
+                          appt.status
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
