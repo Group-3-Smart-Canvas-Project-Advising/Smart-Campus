@@ -1,0 +1,64 @@
+.avatar {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  display: block; /* prevent inline-img baseline offset */
+  object-fit: cover;
+}
+
+/* Wrapper to anchor the dropdown menu */
+.avatar-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Sticky positioning (like hamburger menu) */
+.avatar-sticky {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 50; /* above page content, below modal layers if any */
+}
+
+/* Unstyled button that wraps the avatar image for better accessibility */
+.avatar-button {
+  display: inline-flex;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Small dropdown menu */
+.avatar-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 180px;
+  background: rgba(2, 6, 23, 0.95); /* near-black */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  padding: 6px;
+  backdrop-filter: blur(6px);
+}
+
+.avatar-menu-item {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #e5e7eb;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.avatar-menu-item:hover,
+.avatar-menu-item:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+}
