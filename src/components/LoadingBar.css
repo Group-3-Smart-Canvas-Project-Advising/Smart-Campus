@@ -1,0 +1,36 @@
+.loadingbar-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200; /* above avatar/hamburger */
+  pointer-events: none; /* bar itself shouldn't block */
+}
+
+.loadingbar-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+}
+
+.loadingbar-indicator {
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg, #60a5fa, #22d3ee);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+  animation: loadingbar-slide 1.2s infinite ease-in-out;
+}
+
+@keyframes loadingbar-slide {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(50%); }
+  100% { transform: translateX(200%); }
+}
+
+.loadingbar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.05); /* subtle dim */
+  z-index: 199; /* just under the bar, over content */
+  pointer-events: auto; /* actively block clicks */
+}
