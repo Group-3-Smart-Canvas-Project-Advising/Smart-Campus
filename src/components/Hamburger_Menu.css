@@ -26,7 +26,7 @@
     display: block;
     width: 30px;
     height: 3px;
-    background-color: darkslategrey;
+    background-color: white;
     margin: 4px 0;
     transition: all 0.3s ease;
     border-radius: 2px;

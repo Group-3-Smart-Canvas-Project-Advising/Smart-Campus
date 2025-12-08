@@ -651,6 +651,42 @@ app.patch('/api/appointments/:id/status', async (req, res) => {
   }
 });
 
+// POST /api/ai/advising - lightweight "AI" helper for advising questions
+app.post('/api/ai/advising', (req, res) => {
+  const { prompt, user } = req.body || {};
+  const text = (prompt || "").trim();
+
+  if (!text) {
+    return res.status(400).json({
+      ok: false,
+      message: "Prompt is required.",
+    });
+  }
+
+  const lower = text.toLowerCase();
+
+  let reply = "I'm here to help you think through advising questions.";
+
+  // very simple rule-based “AI-ish” responses
+  if (lower.includes("schedule") || lower.includes("time") || lower.includes("appointment")) {
+    reply = "For appointments, start by checking your upcoming schedule and time zones. If you’re a student, try to book during your advisor’s listed availability; if you’re an advisor, avoid stacking too many back-to-back sessions. In a future version, this assistant could look directly at your appointments and suggest open slots.";
+  } else if (lower.includes("hold")) {
+    reply = "Registration holds usually fall into a few buckets: advising, financial, or paperwork (like immunization or conduct). Check your student portal to see the exact hold type. In a smarter version, this assistant could read that info and list next steps for you automatically.";
+  } else if (lower.includes("major") || lower.includes("degree")) {
+    reply = "When you’re thinking about your major or degree progress, consider both required courses and realistic semester loads. An AI advisor could eventually analyze your completed credits and suggest a term-by-term plan; for now, talk with your advisor and bring a rough idea of how many credits you want each term.";
+  } else if (lower.includes("class") || lower.includes("course")) {
+    reply = "Class selection is usually about balancing requirements, difficulty, and your other commitments. One idea for a future enhancement would be having this assistant look at your past performance and recommend a mix of courses that matches your strengths and available time.";
+  } else {
+    reply = "Great question. I’d start by breaking it into: (1) what you’re trying to accomplish, and (2) what constraints you have (time, prerequisites, holds, workload). This assistant could eventually look at your real data and generate a tailored plan—right now it’s just giving general advising guidance.";
+  }
+
+  // Optional: include user “role” back in the response if needed later
+  res.json({
+    ok: true,
+    reply,
+  });
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Smart Advising API listening on http://localhost:${PORT}`);

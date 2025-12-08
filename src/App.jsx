@@ -85,6 +85,7 @@ const LoginPage = ({ onLogin }) => {
   return (
     <div className="background_image">
       <h1>Smart Campus</h1>
+      <p><br></br></p>
       <form onSubmit={handle_login_submit}>
         <div className="login_component_group">
           <div

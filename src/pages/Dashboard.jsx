@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext.jsx";
 import { create as createAppt, updateStatus } from "../api/appointments.js";
+import Avatar from "../components/Avatar.jsx";
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
 
 export default function Dashboard({ user}) {
@@ -74,15 +75,18 @@ export default function Dashboard({ user}) {
   };
 
   return (
-    <div className="dashboard" aria-busy={isDataLoading ? "true" : undefined}>
-      {/* Sticky top shell: header + quick links */}
+  <div className="background_image dashboard-page">
+    <div
+      className="dashboard-inner"
+      aria-busy={isDataLoading ? "true" : undefined}
+    >
+      {/* Sticky top shell: HEADER ONLY */}
       <div className="dashboard-shell">
         <header className="dashboard-header">
           <div>
             <h1>Advising Dashboard</h1>
             <p>
               Welcome back, {name} {role === "advisor" ? "🧑‍🏫" : "🎓"}
-
             </p>
           </div>
 
@@ -93,49 +97,54 @@ export default function Dashboard({ user}) {
               </span>
               <span className="badge badge-muted">Demo mode</span>
             </div>
-            <Hamburger_Menu/>
+            <Avatar size={40} sticky />
+            <Hamburger_Menu />
           </div>
         </header>
-
-        <nav className="dashboard-nav">
-          <span className="nav-label">Quick links</span>
-          <div className="nav-quick-links">
-            <button className="nav-pill" onClick={scrollToAppointments} disabled={isDataLoading}>
-              📅 Upcoming appointments
-            </button>
-            <button
-              className="nav-pill"
-              onClick={() => setShowCreateForm(true)}
-              disabled={isDataLoading}
-            >
-              ➕ New appointment
-            </button>
-            {role === "student" ? (
-              <>
-                <button className="nav-pill" disabled>
-                  📊 Degree progress (future)
-                </button>
-                <button className="nav-pill" disabled>
-                  ⚠️ Registration holds (future)
-                </button>
-              </>
-            ) : (
-              <>
-                <button className="nav-pill" disabled>
-                  📋 Advisee list (future)
-                </button>
-                <button className="nav-pill" disabled>
-                  📈 Advising stats (future)
-                </button>
-              </>
-            )}
-          </div>
-        </nav>
       </div>
+
+      {/* Nav now sits directly under the sticky header, not inside it */}
+      <nav className="dashboard-nav">
+        <span className="nav-label">Quick links</span>
+        <div className="nav-quick-links">
+          <button
+            className="nav-pill"
+            onClick={scrollToAppointments}
+            disabled={isDataLoading}
+          >
+            📅 Upcoming appointments
+          </button>
+          <button
+            className="nav-pill"
+            onClick={() => setShowCreateForm(true)}
+            disabled={isDataLoading}
+          >
+            ➕ New appointment
+          </button>
+          {role === "student" ? (
+            <>
+              <button className="nav-pill" disabled>
+                📊 Degree progress (future)
+              </button>
+              <button className="nav-pill" disabled>
+                ⚠️ Registration holds (future)
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="nav-pill" disabled>
+                📋 Advisee list (future)
+              </button>
+              <button className="nav-pill" disabled>
+                📈 Advising stats (future)
+              </button>
+            </>
+          )}
+        </div>
+      </nav>
 
       {/* Scrollable content */}
       <main className="dashboard-main">
-        {/* Combined appointments card: table + create button + inline form */}
         <section className="card appointments-card">
           <div className="card-header-row">
             <div>
@@ -305,6 +314,7 @@ export default function Dashboard({ user}) {
           )}
         </section>
       </main>
+    </div>
     </div>
   );
 }

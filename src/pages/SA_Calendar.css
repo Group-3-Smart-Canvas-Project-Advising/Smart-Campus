@@ -5,6 +5,7 @@
   padding: 16px;
   position: relative; /* keep above decorative background */
   z-index: 1;
+  text-align: left;
 }
 
 .cal-title {
@@ -16,21 +17,18 @@
   margin-bottom: 16px;
 }
 
-/* header row with profile on the left and hamburger on the right */
 .cal-header {
-    position: sticky;
+  position: sticky;
   display: flex;
   justify-content: space-between;
-    height: 5px;
+  height: 5px;
   align-items: center;
   margin-bottom: 12px;
 }
 
-/* Avatar styles moved into components/Avatar.css */
-
 .cal-nav {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* equal widths for prev, label, next */
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
   align-items: stretch;
   margin-bottom: 12px;
@@ -50,7 +48,7 @@
 .cal-month-label {
   font-size: 18px;
   font-weight: 600;
-  text-align: center;
+  text-align: left important;
   background: transparent; /* make container fully transparent */
   border: 1px solid transparent; /* retain size without visible border */
   border-radius: 8px;
