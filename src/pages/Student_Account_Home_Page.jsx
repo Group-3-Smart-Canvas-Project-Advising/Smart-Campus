@@ -1,127 +1,103 @@
-import React, { useState } from 'react';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AI_Prompt_Field from "../components/AI_Prompt_Field.jsx";
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
-import Avatar from "../components/Avatar.jsx";
 import { useUser } from "../context/UserContext.jsx";
+import { sendMessage } from "../api/chatbot.js";
+import "../styles/osu-theme.css";
 
-const API_BASE =
-  (import.meta.env && import.meta.env.VITE_API_BASE_URL)
-    ? import.meta.env.VITE_API_BASE_URL
-    : "http://localhost:3000";
-
-const Student_Account_Home_Page = () =>
-{
+const Student_Account_Home_Page = () => {
     const { user } = useUser();
-    const [aiMessages, setAiMessages] = useState([]);
-    const [aiLoading, setAiLoading] = useState(false);
-    const [aiError, setAiError] = useState("");
+    const navigate = useNavigate();
+    const role = user?.role || "student";
+    const name = user?.name || user?.username || "Student";
+    const [isLoading, setIsLoading] = useState(false);
+    const [lastResponse, setLastResponse] = useState("");
 
-    const handleAiSubmit = async (prompt) => {
-        const trimmed = prompt.trim();
-        if (!trimmed) return;
-        setAiError("");
+    const handleChatSubmit = async (message) => {
+        if (!message.trim() || isLoading) return;
 
-        // Add user message to chat log immediately
-        setAiMessages(prev => [
-            ...prev,
-            { sender: "user", text: trimmed, ts: new Date().toISOString() }
-        ]);
+        setIsLoading(true);
+        setLastResponse("");
 
         try {
-            setAiLoading(true);
-            const res = await fetch(`${API_BASE}/api/ai/advising`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    prompt: trimmed,
-                    user: {
-                        id: user?.id,
-                        role: user?.role,
-                        username: user?.username,
-                    },
-                }),
-            });
+            const result = await sendMessage(message, user);
 
-            if (!res.ok) {
-                throw new Error(`HTTP ${res.status}`);
-            }
+            if (result.ok && result.response) {
+                setLastResponse(result.response);
 
-            const data = await res.json();
-            if (!data.ok || !data.reply) {
-                throw new Error("Bad AI response payload");
-            }
-
-            // Add assistant reply
-            setAiMessages(prev => [
-                ...prev,
-                {
-                    sender: "assistant",
-                    text: data.reply,
-                    ts: new Date().toISOString(),
+                // Handle navigation if the chatbot detected a routing intent
+                if (result.navigation && result.navigation.shouldNavigate) {
+                    // Small delay to show the response before navigating
+                    setTimeout(() => {
+                        navigate(result.navigation.route);
+                    }, 1000);
                 }
-            ]);
-        } catch (err) {
-            console.error("AI advising call failed:", err);
-            setAiError("The advising assistant ran into an issue. Please try again.");
+            } else {
+                setLastResponse("I'm sorry, I couldn't process that request. Please try again.");
+            }
+        } catch (error) {
+            console.error("Chatbot error:", error);
+            setLastResponse("I'm sorry, there was an error. Please try again later.");
         } finally {
-            setAiLoading(false);
+            setIsLoading(false);
         }
     };
 
     return (
-        <div className="background_image">
-            <div className="ai-home-shell">
-                <header className="ai-home-header">
+        <div className="osu-app-shell">
+            <header className="osu-topbar">
+                <div className="osu-topbar-left">
+                    <div className="osu-logo-mark" aria-hidden="true">
+                        OSU
+                    </div>
                     <div>
-                        <h2>Welcome to Smart Advising</h2>
-                        <p className="card-subtitle">
+                        <h1 className="osu-topbar-title">Smart Advising Assistant</h1>
+                        <p className="osu-topbar-subtitle">
+                            Welcome back, {name}
                         </p>
                     </div>
-                    <Avatar size={40} sticky />
+                </div>
+
+                <div className="osu-topbar-right">
+                    <div className="dashboard-badges">
+            <span className="badge badge-primary">
+              {role === "advisor" ? "Advisor" : "Student"}
+            </span>
+                        <span className="badge badge-muted">Demo mode</span>
+                    </div>
                     <Hamburger_Menu />
-                </header>
+                </div>
+            </header>
 
-                <section className="card ai-home-card">
-                    <div className="ai-chat-log">
-                        {aiMessages.length === 0 && (
-                            <p className="ai-empty-state">
-                                Try asking something like: “How should I plan my schedule next term?”
-                            </p>
-                        )}
+            <main className="osu-main">
+                <section className="osu-card osu-home-card">
+                    <h2 className="osu-card-title">Welcome</h2>
+                    <p className="osu-card-subtitle">
+                        Ask a question about classes, advising, or campus resources and the assistant will help.
+                    </p>
 
-                        {aiMessages.map((m, idx) => (
-                            <div
-                                key={idx}
-                                className={
-                                    m.sender === "user"
-                                        ? "ai-message ai-message-user"
-                                        : "ai-message ai-message-assistant"
-                                }
-                            >
-                                <div className="ai-message-label">
-                                    {m.sender === "user" ? "You" : "Advising assistant"}
-                                </div>
-                                <div className="ai-message-text">
-                                    {m.text}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {aiError && (
-                        <p className="form-error" style={{ marginBottom: "0.5rem" }}>
-                            {aiError}
-                        </p>
+                    {lastResponse && (
+                        <div className="osu-chat-response" style={{
+                            marginBottom: "1rem",
+                            padding: "1rem",
+                            backgroundColor: "#f3f4f6",
+                            borderRadius: "8px",
+                            border: "1px solid #e5e7eb"
+                        }}>
+                            <p style={{ margin: 0, color: "#1f2937" }}>{lastResponse}</p>
+                        </div>
                     )}
 
-                    <AI_Prompt_Field
-                        onSubmit={handleAiSubmit}
-                        isLoading={aiLoading}
-                        placeholder="Ask about holds, scheduling, or degree planning…"
-                    />
+                    <div className="osu-home-prompt">
+                        <AI_Prompt_Field 
+                            onSubmit={handleChatSubmit}
+                            isLoading={isLoading}
+                            placeholder="Ask me to navigate to a page or ask a question..."
+                        />
+                    </div>
                 </section>
-            </div>
+            </main>
         </div>
     );
 };

@@ -30,6 +30,7 @@ Includes mock A.I. prompt bubble and hamburger menu with navigation to 'Calendar
 # 2. Backend Setup
 - cd backend
 - npm install
+- (Optional) Create a `.env` file with your configuration (see Environment Variables below)
 - npm run dev
 
 # 3. Frontend Setup
@@ -77,3 +78,39 @@ Includes mock A.I. prompt bubble and hamburger menu with navigation to 'Calendar
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
+
+## Environment Variables
+
+### Backend Configuration
+
+Create a `.env` file in the `backend/` directory with the following variables:
+
+```env
+# Data Mode: 'mock' or 'db'
+DATA_MODE=mock
+
+# Gemini AI Configuration (Optional)
+# Get your API key from: https://makersuite.google.com/app/apikey
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-pro  # Optional, defaults to 'gemini-pro'
+
+# Database Configuration (if using DATA_MODE=db)
+# DB_SERVER=your_server
+# DB_DATABASE=your_database
+# DB_USER=your_username
+# DB_PASSWORD=your_password
+# DB_ENCRYPT=true
+# DB_TRUST_SERVER_CERTIFICATE=true
+```
+
+### AI Chatbot
+
+The chatbot uses Google's Gemini AI when `GEMINI_API_KEY` is configured. If not set, it falls back to a rule-based system that can:
+- Navigate to different pages (Calendar, Dashboard, Profile, Settings)
+- Answer basic questions about the app
+- Provide help and guidance
+
+To enable Gemini AI:
+1. Get an API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Add `GEMINI_API_KEY=your_key_here` to `backend/.env`
+3. Restart the backend server

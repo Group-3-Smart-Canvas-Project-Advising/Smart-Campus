@@ -9,29 +9,29 @@ import { UserContext } from "./context/UserContext.jsx";
 import { listForUser } from "./api/appointments.js";
 import LoadingBar from "./components/LoadingBar.jsx";
 
-// Only keep routes that actually use lazy loading
+// Routes that are lazy-loaded
 const page_routes = [
-    { path: '/student_home', filename: 'Student_Account_Home_Page' },
-    { path: '/settings', filename: 'SA_Settings' },
-    { path: '/calendar', filename: 'SA_Calendar' },
-    { path: '/dashboard', filename: 'Dashboard' },
-    { path: '/profile', filename: 'SA_Profile' },
+  { path: "/student_home", filename: "Student_Account_Home_Page" },
+  { path: "/settings", filename: "SA_Settings" },
+  { path: "/calendar", filename: "SA_Calendar" },
+  { path: "/profile", filename: "SA_Profile" },
 ];
 
-// Create a map of lazy-loaded components
+// Map filenames → lazy components
 const componentMap = {};
 page_routes.forEach((route) => {
   componentMap[route.filename] = lazy(() =>
-    import(`./pages/${route.filename}.jsx`)
+      import(`./pages/${route.filename}.jsx`)
   );
 });
 
-// Login page
+// ------------------ LOGIN PAGE (OSU THEME) ------------------ //
+
 const LoginPage = ({ onLogin }) => {
   const [Username, set_Username] = useState("");
   const [password, set_Password] = useState("");
   const [is_loading, set_is_loading] = useState(false);
-  const [useServerMode, setUseServerMode] = useState(false); // false = mock, true = server
+  const [useServerMode, setUseServerMode] = useState(false); // false = mock, true = db
   const navigate = useNavigate();
 
   const handle_login_submit = async (event) => {
@@ -45,7 +45,7 @@ const LoginPage = ({ onLogin }) => {
         body: JSON.stringify({
           username: Username,
           password: password,
-          mode: useServerMode ? 'db' : 'mock',
+          mode: useServerMode ? "db" : "mock",
         }),
       });
 
@@ -67,9 +67,10 @@ const LoginPage = ({ onLogin }) => {
           onLogin({
             ...data.user,
             username: data.user?.username ?? Username,
-            mode: loginMode     
+            mode: loginMode,
           });
         }
+
         navigate("/student_home");
       } else {
         alert("Unexpected response from server.");
@@ -83,102 +84,131 @@ const LoginPage = ({ onLogin }) => {
   };
 
   return (
-    <div className="background_image">
-      <h1>Smart Campus</h1>
-      <p><br></br></p>
-      <form onSubmit={handle_login_submit}>
-        <div className="login_component_group">
-          <div
-            style={{
-              backgroundColor: "rgba(100, 100, 100, 0.3)",
-              borderRadius: "16px",
-              overflow: "hidden",
-            }}
-          >
-            <div style={{ padding: "8px" }}>
-              <Text_Input_Field
-                place_holder_text={"Username"}
-                text={Username}
-                on_change_handler={set_Username}
-              />
+      <div className="osu-app-shell osu-login-shell">
+        {/* OSU top bar */}
+        <header className="osu-topbar">
+          <div className="osu-topbar-left">
+            <div className="osu-logo-mark" aria-hidden="true">
+              OSU
             </div>
-
-            <div style={{ padding: "8px" }}>
-              <Text_Input_Field
-                place_holder_text={"Password"}
-                text={password}
-                on_change_handler={set_Password}
-              />
-            </div>
-
-            <div style={{ padding: "8px" }}>
-              <Login_Button
-                on_click_handler={handle_login_submit}
-                is_disabled={is_loading}
-              />
-            </div>
-
-            {/* Mode Toggle */}
-            <div style={{ 
-              padding: "8px", 
-              display: "flex", 
-              alignItems: "center", 
-              justifyContent: "center",
-              gap: "12px"
-            }}>
-              <label style={{ 
-                color: "#e5e7eb", 
-                fontSize: "0.85rem",
-                cursor: "pointer",
-                userSelect: "none"
-              }}>
-                Mock Mode
-              </label>
-              <div
-                onClick={() => setUseServerMode(!useServerMode)}
-                style={{
-                  position: "relative",
-                  width: "50px",
-                  height: "26px",
-                  backgroundColor: useServerMode ? "#38bdf8" : "rgba(148, 163, 184, 0.5)",
-                  borderRadius: "13px",
-                  cursor: "pointer",
-                  transition: "background-color 0.3s ease",
-                  border: "1px solid rgba(148, 163, 184, 0.3)"
-                }}
-              >
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "2px",
-                    left: useServerMode ? "26px" : "2px",
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: "#fff",
-                    borderRadius: "50%",
-                    transition: "left 0.3s ease",
-                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)"
-                  }}
-                />
-              </div>
-              <label style={{ 
-                color: "#e5e7eb", 
-                fontSize: "0.85rem",
-                cursor: "pointer",
-                userSelect: "none"
-              }}>
-                Server Mode
-              </label>
+            <div>
+              <h1 className="osu-topbar-title">Smart Campus</h1>
+              <p className="osu-topbar-subtitle">Advising sign in</p>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </header>
+
+        {/* Centered login card */}
+        <main className="osu-main osu-login-main">
+          <section className="osu-card osu-login-card">
+            <h2 className="osu-card-title">Sign in</h2>
+            <p className="osu-card-subtitle">
+              Use your demo username and password to access the advising tools.
+            </p>
+
+            <form onSubmit={handle_login_submit}>
+              <div className="login_component_group">
+                <div
+                    style={{
+                      borderRadius: "16px",
+                      overflow: "hidden",
+                    }}
+                >
+                  <div style={{ padding: "8px" }}>
+                    <Text_Input_Field
+                        place_holder_text={"Username"}
+                        text={Username}
+                        on_change_handler={set_Username}
+                    />
+                  </div>
+
+                  <div style={{ padding: "8px" }}>
+                    <Text_Input_Field
+                        place_holder_text={"Password"}
+                        text={password}
+                        on_change_handler={set_Password}
+                    />
+                  </div>
+
+                  <div style={{ padding: "8px" }}>
+                    <Login_Button
+                        on_click_handler={handle_login_submit}
+                        is_disabled={is_loading}
+                    />
+                  </div>
+
+                  {/* Mode toggle: mock ↔ server */}
+                  <div
+                      style={{
+                        padding: "8px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "12px",
+                      }}
+                  >
+                    <label
+                        style={{
+                          color: "#4b5563",
+                          fontSize: "0.85rem",
+                          cursor: "pointer",
+                          userSelect: "none",
+                        }}
+                    >
+                      Mock mode
+                    </label>
+                    <div
+                        onClick={() => setUseServerMode(!useServerMode)}
+                        style={{
+                          position: "relative",
+                          width: "50px",
+                          height: "26px",
+                          backgroundColor: useServerMode
+                              ? "#38bdf8"
+                              : "rgba(148, 163, 184, 0.5)",
+                          borderRadius: "13px",
+                          cursor: "pointer",
+                          transition: "background-color 0.3s ease",
+                          border: "1px solid rgba(148, 163, 184, 0.3)",
+                        }}
+                    >
+                      <div
+                          style={{
+                            position: "absolute",
+                            top: "2px",
+                            left: useServerMode ? "26px" : "2px",
+                            width: "20px",
+                            height: "20px",
+                            backgroundColor: "#fff",
+                            borderRadius: "50%",
+                            transition: "left 0.3s ease",
+                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                          }}
+                      />
+                    </div>
+                    <label
+                        style={{
+                          color: "#4b5563",
+                          fontSize: "0.85rem",
+                          cursor: "pointer",
+                          userSelect: "none",
+                        }}
+                    >
+                      Server mode
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </section>
+        </main>
+      </div>
   );
 };
 
-const App = () => {
+// ------------------ APP ROOT ------------------ //
 
+const App = () => {
   const [user, setUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
   const [isPageLoading, setIsPageLoading] = useState(false);
@@ -189,11 +219,15 @@ const App = () => {
     setAppointments([]);
   };
 
-  // Load appointments when user logs in (or clear when logs out)
+  // Load appointments when user logs in
   useEffect(() => {
     let aborted = false;
+
     async function load() {
-      if (!user) { setAppointments([]); return; }
+      if (!user) {
+        setAppointments([]);
+        return;
+      }
       try {
         setIsDataLoading(true);
         const mine = await listForUser(user);
@@ -205,49 +239,54 @@ const App = () => {
         if (!aborted) setIsDataLoading(false);
       }
     }
+
     load();
-    return () => { aborted = true; };
+    return () => {
+      aborted = true;
+    };
   }, [user]);
 
   return (
-    <BrowserRouter>
-      <UserContext.Provider value={{
-        user,
-        setUser,
-        appointments,
-        setAppointments,
-        isPageLoading,
-        setIsPageLoading,
-        isDataLoading,
-        setIsDataLoading,
-      }}>
-        {/* Global loading bar that reacts to context flags (data/page) */}
-        <LoadingBar />
-        <Suspense fallback={<LoadingBar forceVisible /> }>
-          <Routes>
-            {/* Login route */}
-            <Route path="/" element={<LoginPage onLogin={setUser} />} />
+      <BrowserRouter>
+        <UserContext.Provider
+            value={{
+              user,
+              setUser,
+              appointments,
+              setAppointments,
+              isPageLoading,
+              setIsPageLoading,
+              isDataLoading,
+              setIsDataLoading,
+            }}
+        >
+          {/* Global loading bar that reacts to context flags */}
+          <LoadingBar />
 
-            {/* Your dashboard, now also gets onLogout */}
-            <Route
-              path="/dashboard"
-              element={<Dashboard user={user} onLogout={handleLogout} />}
-            />
+          <Suspense fallback={<LoadingBar forceVisible />}>
+            <Routes>
+              {/* Login */}
+              <Route path="/" element={<LoginPage onLogin={setUser} />} />
 
-            {/* Other lazy-loaded pages (original Successful_Login_Page) */}
-            {page_routes.map((route) => (
+              {/* Dashboard (not lazy so we can pass props) */}
               <Route
-                key={route.filename}
-                path={route.path}
-                element={React.createElement(componentMap[route.filename])}
+                  path="/dashboard"
+                  element={<Dashboard user={user} onLogout={handleLogout} />}
               />
-            ))}
-          </Routes>
-        </Suspense>
-      </UserContext.Provider>
-    </BrowserRouter>
+
+              {/* Other lazy-loaded pages */}
+              {page_routes.map((route) => (
+                  <Route
+                      key={route.filename}
+                      path={route.path}
+                      element={React.createElement(componentMap[route.filename])}
+                  />
+              ))}
+            </Routes>
+          </Suspense>
+        </UserContext.Provider>
+      </BrowserRouter>
   );
 };
-
 
 export default App;

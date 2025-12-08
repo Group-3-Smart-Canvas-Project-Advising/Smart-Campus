@@ -1,119 +1,62 @@
-/* Card layout container */
-.ai-home-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.5rem;
-  border-radius: 16px; /* match login */
-  background: rgba(30, 41, 59, 0.45); /* match login glass */
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  width: 100%;
-  max-width: 700px;
-  margin: 1.5rem auto;
-}
-
-/* Scrollable message area */
-.ai-chat-log {
-  flex: 0 0 260px;
-  overflow-y: auto;
-  padding-right: 4px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  background: rgba(15, 23, 42, 0.45); /* similar to .form-input background */
-  border-radius: 10px;
-  padding: 0.75rem;
-}
-
-/* Empty state */
-.ai-empty-state {
-  font-size: 0.85rem;
-  color: var(--text-muted, #9ca3af);
-  opacity: 0.8;
-}
-
-/* User & assistant message styling */
-.ai-message {
-  text-align: left;
-  font-size: 0.9rem;
-  line-height: 1.35rem;
-}
-
-.ai-message-user {
-  align-self: flex-end;
-  max-width: 80%;
-  background: rgba(56, 189, 248, 0.15);
-  border-radius: 12px 12px 0 12px;
-  padding: 0.5rem 0.75rem;
-  color: var(--text-main, #e5e7eb);
-}
-
-.ai-message-assistant {
-  align-self: flex-start;
-  max-width: 80%;
-  background: rgba(15, 23, 42, 0.9);
-  border-radius: 12px 12px 12px 0;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  color: var(--text-main, #e5e7eb);
-}
-
-/* Sender labels */
-.ai-message-label {
-  font-size: 0.75rem;
-  opacity: 0.7;
-  margin-bottom: 0.15rem;
-}
-
-.ai-message-text {
-  white-space: pre-wrap;
-}
-
-/* AI input area (textarea + button) */
 .ai-prompt-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    z-index: 10;
+    position: relative;
 }
 
-/* Prevent the textarea from growing vertically */
 .ai-prompt-field {
-  resize: none !important;
-  height: 70px;
-  max-height: 70px;
-  min-height: 70px;
-  line-height: 1.3rem;
-  padding: 0.75rem;
-  border-radius: 10px;
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  background: rgba(15, 23, 42, 0.9); /* same as .form-input */
-  color: #e5e7eb;
-  font-size: 0.9rem;
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.2s;
+    z-index: 10;
+
 }
 
-/* Footer row (chars + send button) */
+.ai-prompt-field:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.ai-prompt-field:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
 .prompt-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
 }
 
 .character-count {
-  font-size: 0.75rem;
-  color: var(--text-muted, #9ca3af);
+    font-size: 12px;
+    color: #666;
 }
 
 .submit-button {
-  background: var(--accent, #38bdf8);
-  color: #0f172a;
-  border: none;
-  border-radius: 8px;
-  padding: 0.4rem 0.9rem;
-  cursor: pointer;
-  font-weight: 600;
+    padding: 8px 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.submit-button:hover {
-  background: #0ea5e9;
+.submit-button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

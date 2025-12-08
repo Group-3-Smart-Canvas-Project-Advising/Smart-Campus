@@ -48,6 +48,7 @@ html, body, #root {
         transparent 70%
     );
     z-index: 0;
+    /* Ensure this decorative layer never intercepts clicks */
     pointer-events: none;
     filter: blur(30px);
     animation: slow-spin 22s linear infinite;
@@ -79,45 +80,23 @@ html, body, #root {
   color: #94a3b8;
 }
 
+
 /* ---------------------------------------------------
    DASHBOARD LAYOUT
 --------------------------------------------------- */
-
-.background_image.dashboard-page {
-  justify-content: flex-start; /* start from top */
-  align-items: stretch;        /* inner container controls width */
-  overflow-y: visible;
-  padding-top: 16px;
-}
-
-.background_image.dashboard-page::before {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 180vw;
-  height: 180vh;
-}
-
-.dashboard-inner {
-  max-width: 960px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 16px;
-  position: relative;
-  z-index: 1;
-  text-align: left;
-}
-
 .dashboard {
   min-height: 100vh;
-  background: transparent; 
+  text-align: left;
+
+  background: radial-gradient(circle at top, #020617, #020617 60%, #0b1120 100%);
+  padding: 2rem 2.75rem;
 }
 
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
 }
 
 .dashboard-badges {
@@ -133,23 +112,26 @@ html, body, #root {
   gap: 1.25rem;
 }
 
+/* Sticky shell: header + quick links */
 .dashboard-shell {
   position: sticky;
   top: 0;
   z-index: 20;
   padding-bottom: 0.75rem;
   margin-bottom: 1rem;
-  background: transparent;               
-  backdrop-filter: none;                 
+  background: rgba(2, 6, 23, 0.6); /* subtle dark overlay */
+  backdrop-filter: blur(6px);      /* frosted glass effect */
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
 }
 
+/* Header tweaks if you want a right-side area */
 .dashboard-header-right {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-left:auto;
 }
 
+/* Quick links banner */
 .dashboard-nav {
   display: flex;
   align-items: center;
@@ -157,8 +139,7 @@ html, body, #root {
   border-top: 1px solid rgba(148, 163, 184, 0.35);
   border-bottom: 1px solid rgba(148, 163, 184, 0.35);
   padding: 0.5rem 0;
-  margin-bottom: 1rem;
-  margin-top: 0;
+  margin-top: 0.75rem;
 }
 
 .nav-label {
@@ -174,6 +155,7 @@ html, body, #root {
   gap: 0.5rem;
 }
 
+/* Quick link pill buttons */
 .nav-pill {
   padding: 0.3rem 0.75rem;
   border-radius: 12px;
@@ -199,6 +181,7 @@ html, body, #root {
   cursor: default;
 }
 
+/* Card header row */
 .card-header-row {
   display: flex;
   justify-content: space-between;
@@ -212,6 +195,7 @@ html, body, #root {
   color: #9ca3af;
 }
 
+/* Primary action button */
 .primary-button {
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
@@ -235,9 +219,8 @@ html, body, #root {
   cursor: default;
 }
 
-/* ---------------------------------------------------
-   APPT FORM
---------------------------------------------------- */
+
+/* Optional: appointments form styling (if not added before) */
 .appt-form {
   margin-top: 0.75rem;
   display: flex;
@@ -291,11 +274,11 @@ html, body, #root {
    CARDS
 --------------------------------------------------- */
 .card {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(15, 23, 42, 0.9);
   border-radius: 14px;
   padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(148, 163, 184, 0.25); /* subtle frame */
-  backdrop-filter: none; /* no extra fog */
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  backdrop-filter: blur(3px);
 }
 
 
@@ -344,7 +327,6 @@ html, body, #root {
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
   font-size: 0.75rem;
-  align-items: right;
 }
 
 .badge-primary {

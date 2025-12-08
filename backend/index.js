@@ -4,6 +4,11 @@ require('dotenv').config();
 const { query } = require('./db');
 const express = require('express');
 const cors = require('cors');
+const { 
+  isGeminiConfigured, 
+  generateGeminiResponse, 
+  generateFallbackResponse 
+} = require('./gemini');
 
 const app = express();
 const PORT = 3000;
@@ -563,6 +568,91 @@ app.post('/api/appointments', async (req, res) => {
   }
 });
 
+// GET /api/chatbot/models - List available Gemini models (for debugging)
+app.get('/api/chatbot/models', async (req, res) => {
+  const { listAvailableModels } = require('./gemini');
+  
+  try {
+    const models = await listAvailableModels();
+    return res.json({
+      ok: true,
+      models
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      error: error.message
+    });
+  }
+});
+
+// POST /api/chatbot - AI chatbot endpoint for queries and routing
+app.post('/api/chatbot', async (req, res) => {
+  const { message, userId, role } = req.body;
+
+  // Log incoming request
+  console.log('\n=== Chatbot Request Received ===');
+  console.log('Message:', message);
+  console.log('User ID:', userId);
+  console.log('Role:', role || 'student');
+  console.log('Timestamp:', new Date().toISOString());
+
+  if (!message || typeof message !== 'string') {
+    console.log('❌ Request rejected: Invalid message format');
+    return res.status(400).json({
+      ok: false,
+      message: 'Message is required and must be a string.'
+    });
+  }
+
+  try {
+    let result;
+
+    // Use Gemini if configured, otherwise fall back to rule-based system
+    if (isGeminiConfigured()) {
+      try {
+        console.log('🤖 Using Gemini AI for chatbot response');
+        console.log('📋 Model:', process.env.GEMINI_MODEL || 'gemini-1.5-flash');
+        result = await generateGeminiResponse(message, role || 'student');
+        console.log('✅ Gemini response generated successfully');
+      } catch (geminiError) {
+        console.error('⚠️ Gemini API error, falling back to rule-based system');
+        console.error('Error details:', {
+          message: geminiError.message,
+          status: geminiError.status,
+          code: geminiError.code
+        });
+        // Fall back to rule-based system if Gemini fails
+        result = generateFallbackResponse(message);
+        console.log('✅ Fallback response generated');
+      }
+    } else {
+      console.log('📝 Using rule-based chatbot (Gemini not configured)');
+      result = generateFallbackResponse(message);
+      console.log('✅ Rule-based response generated');
+    }
+
+    console.log('Response:', result.response);
+    if (result.navigation) {
+      console.log('Navigation:', result.navigation.route);
+    }
+    console.log('=== Request Complete ===\n');
+
+    return res.json({
+      ok: true,
+      response: result.response,
+      navigation: result.navigation
+    });
+  } catch (error) {
+    console.error('Chatbot error:', error);
+    return res.status(500).json({
+      ok: false,
+      message: 'An error occurred processing your request.',
+      error: String(error)
+    });
+  }
+});
+
 // PATCH /api/appointments/:id/status - update status (e.g., CONFIRMED, CANCELED)
 app.patch('/api/appointments/:id/status', async (req, res) => {
   const id = Number(req.params.id);
@@ -649,42 +739,6 @@ app.patch('/api/appointments/:id/status', async (req, res) => {
       message: 'Could not update status'
     });
   }
-});
-
-// POST /api/ai/advising - lightweight "AI" helper for advising questions
-app.post('/api/ai/advising', (req, res) => {
-  const { prompt, user } = req.body || {};
-  const text = (prompt || "").trim();
-
-  if (!text) {
-    return res.status(400).json({
-      ok: false,
-      message: "Prompt is required.",
-    });
-  }
-
-  const lower = text.toLowerCase();
-
-  let reply = "I'm here to help you think through advising questions.";
-
-  // very simple rule-based “AI-ish” responses
-  if (lower.includes("schedule") || lower.includes("time") || lower.includes("appointment")) {
-    reply = "For appointments, start by checking your upcoming schedule and time zones. If you’re a student, try to book during your advisor’s listed availability; if you’re an advisor, avoid stacking too many back-to-back sessions. In a future version, this assistant could look directly at your appointments and suggest open slots.";
-  } else if (lower.includes("hold")) {
-    reply = "Registration holds usually fall into a few buckets: advising, financial, or paperwork (like immunization or conduct). Check your student portal to see the exact hold type. In a smarter version, this assistant could read that info and list next steps for you automatically.";
-  } else if (lower.includes("major") || lower.includes("degree")) {
-    reply = "When you’re thinking about your major or degree progress, consider both required courses and realistic semester loads. An AI advisor could eventually analyze your completed credits and suggest a term-by-term plan; for now, talk with your advisor and bring a rough idea of how many credits you want each term.";
-  } else if (lower.includes("class") || lower.includes("course")) {
-    reply = "Class selection is usually about balancing requirements, difficulty, and your other commitments. One idea for a future enhancement would be having this assistant look at your past performance and recommend a mix of courses that matches your strengths and available time.";
-  } else {
-    reply = "Great question. I’d start by breaking it into: (1) what you’re trying to accomplish, and (2) what constraints you have (time, prerequisites, holds, workload). This assistant could eventually look at your real data and generate a tailored plan—right now it’s just giving general advising guidance.";
-  }
-
-  // Optional: include user “role” back in the response if needed later
-  res.json({
-    ok: true,
-    reply,
-  });
 });
 
 // Start the server
