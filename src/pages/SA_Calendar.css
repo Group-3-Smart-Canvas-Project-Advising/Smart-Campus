@@ -1,14 +1,21 @@
+/* Calendar container inside the OSU shell */
 .calendar-inner {
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
-  padding: 16px;
-  position: relative; /* keep above decorative background */
-  z-index: 1;
+  padding: 16px 20px 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
 }
 
+/* Title and subtitle */
 .cal-title {
-  margin-bottom: 8px;
+  margin: 4px 0 12px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111827;
 }
 
 .cal-subtitle {
@@ -16,43 +23,46 @@
   margin-bottom: 16px;
 }
 
-/* header row with profile on the left and hamburger on the right */
+/* Header row with avatar and hamburger already in top bar */
 .cal-header {
-    position: sticky;
   display: flex;
-  justify-content: space-between;
-    height: 5px;
+  justify-content: flex-start;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
-/* Avatar styles moved into components/Avatar.css */
-
+/* Month navigation row */
 .cal-nav {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* equal widths for prev, label, next */
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
   align-items: stretch;
   margin-bottom: 12px;
 }
 
 .cal-nav-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #e5e7eb;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #111827;
   padding: 6px 10px;
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
   text-align: center;
+  font-size: 0.85rem;
+}
+
+.cal-nav-btn:hover:enabled {
+  border-color: #9ca3af;
+  background: #f3f4f6;
 }
 
 .cal-month-label {
-  font-size: 18px;
+  font-size: 0.95rem;
   font-weight: 600;
   text-align: center;
-  background: transparent; /* make container fully transparent */
-  border: 1px solid transparent; /* retain size without visible border */
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 6px 10px;
   display: flex;
@@ -60,108 +70,119 @@
   justify-content: center;
 }
 
+/* Scroll area with the grid plus form */
 .cal-scroll {
   max-height: 70vh;
   overflow-y: auto;
   padding-right: 4px;
 }
 
+/* Calendar grid */
 .cal-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
+  font-size: 0.8rem;
 }
 
+/* Generic day cell */
 .cal-cell {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
   min-height: 92px;
-  padding: 8px;
+  padding: 6px;
   text-align: left;
-  background: rgba(255, 255, 255, 0.03);
+  background: #ffffff;
+  color: #111827;
 }
 
 .cal-cell.is-clickable {
   cursor: pointer;
 }
 
-.cal-cell.is-today {
-  border-color: #38bdf8;
+.cal-cell.is-clickable:hover {
+  border-color: #9ca3af;
+  background: #f9fafb;
 }
 
+/* Today highlight */
+.cal-cell.is-today {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+}
+
+/* Day name header cells */
 .cal-cell.cal-head {
   font-weight: 600;
   opacity: 0.9;
+  background: #f3f4f6;
 }
 
+/* Cell header with day number and badge */
 .cal-cell-header {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .cal-day-number {
-  font-size: 12px;
-  opacity: 0.8;
+  font-size: 0.8rem;
+  opacity: 0.85;
 }
 
+/* Badge that shows count of events in a day */
 .cal-badge {
-  background: rgba(56, 189, 248, 0.2);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  color: #93c5fd;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
   border-radius: 999px;
   padding: 0 6px;
-  font-size: 11px;
+  font-size: 0.7rem;
   line-height: 18px;
 }
 
+/* Events inside a day cell */
 .cal-events {
-  margin-top: 6px;
+  margin-top: 4px;
   display: grid;
   gap: 4px;
 }
 
 .cal-event {
-  background: rgba(99, 102, 241, 0.18);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  color: #c7d2fe;
+  background: #e0ecff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
   border-radius: 6px;
-  padding: 2px 6px;
-  font-size: 12px;
+  padding: 2px 4px;
+  font-size: 0.7rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .cal-more {
-  font-size: 11px;
-  opacity: 0.7;
+  font-size: 0.7rem;
+  opacity: 0.8;
+  color: #4b5563;
 }
 
+/* Form at the bottom for creating an event */
 .cal-form {
   margin-top: 16px;
   text-align: left;
 }
 
+/* Actions row under the form */
 .cal-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-top: 0.75rem;
 }
 
-/* Page-specific overrides for the calendar page wrapper to avoid top clipping */
-.background_image.calendar-page {
-  justify-content: flex-start; /* start from top, not centered vertically */
-  align-items: stretch;        /* let inner container define its own width */
-  overflow-y: auto;            /* allow page to scroll if content is taller */
-  padding-top: 16px;           /* ensure header (avatar) has breathing room */
-}
-
-/* Remove the decorative spinner from the scroll flow on the calendar page */
-.background_image.calendar-page::before {
-  position: fixed; /* prevent affecting scrollHeight */
-  top: 0;
-  left: 0;
-  width: 180vw;  /* keep it large enough to cover */
-  height: 180vh;
+/* Optional: make the whole calendar area sit nicely in the OSU main layout */
+@media (max-width: 768px) {
+  .calendar-inner {
+    padding: 12px 12px 16px;
+  }
 }
