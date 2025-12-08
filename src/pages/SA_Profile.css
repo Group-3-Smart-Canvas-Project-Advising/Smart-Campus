@@ -1,13 +1,58 @@
-
-
 .default_profile_icon
 {
     width: 50px;
     height: 50px;
 }
-.osu-topbar-simple {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
+
+.background_image.profile-page {
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: auto;
+  padding-top: 16px;
+}
+
+.background_image.profile-page::before {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 180vw;
+  height: 180vh;
+}
+
+.profile-inner {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+  text-align: left;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.profile-main {
+  margin-top: 12px;
+}
+
+/* Little card for the profile content */
+.profile-card {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-card img {
+  width: 72px;
+  height: 72px;
 }

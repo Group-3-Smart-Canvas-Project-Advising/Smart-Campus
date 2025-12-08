@@ -1,0 +1,63 @@
+.background_image.settings-page {
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-y: auto;
+  padding-top: 16px;
+}
+
+.background_image.settings-page::before {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 180vw;
+  height: 180vh;
+}
+
+.settings-inner {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+  text-align: left;
+}
+
+.settings-main {
+  display: grid;
+  gap: 16px;
+}
+
+/* cards */
+.settings-card {
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.settings-card-subtitle {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+/* options */
+.settings-option-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+.settings-option-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
