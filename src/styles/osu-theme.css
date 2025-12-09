@@ -1,0 +1,445 @@
+:root {
+    --osu-orange: #D73F09;
+    --osu-orange-bright: #FF6A00;
+    --osu-black: #000000;
+    --osu-bg: #F2F2F2;
+    --osu-surface: #FFFFFF;
+    --osu-border-soft: #E5E5E5;
+    --osu-text-main: #1A1A1A;
+    --osu-muted: #6B7280;
+}
+
+/* global */
+
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: var(--osu-bg);
+    color: var(--osu-text-main);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* shell */
+
+.osu-app-shell {
+    min-height: 100vh;
+    width: 100%;
+    background: var(--osu-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+/* top bar */
+
+.osu-topbar {
+    background: var(--osu-orange);
+    color: #fff;
+    padding: 1rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 4px solid var(--osu-black);
+}
+
+.osu-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.osu-logo-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--osu-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    font-size: 0.9rem;
+}
+
+.osu-topbar-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.osu-topbar-subtitle {
+    margin: 0.1rem 0 0;
+    font-size: 0.9rem;
+}
+
+.osu-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* badges */
+
+.badge-primary {
+    background: var(--osu-black);
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.badge-muted {
+    background: rgba(255, 255, 255, 0.15);
+    color: #f9fafb;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+}
+
+.dashboard-badges {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* quick nav */
+
+.osu-quick-nav {
+    background: var(--osu-surface);
+    padding: 0.75rem 1.75rem 1rem;
+    border-bottom: 1px solid var(--osu-border-soft);
+}
+
+.osu-quick-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--osu-muted);
+    font-weight: 600;
+}
+
+.osu-quick-links {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* buttons */
+
+.osu-pill-button {
+    border: none;
+    border-radius: 999px;
+    padding: 0.45rem 0.95rem;
+    background: var(--osu-orange);
+    color: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.16s ease, transform 0.08s ease;
+}
+
+.osu-pill-button:hover {
+    background: var(--osu-orange-bright);
+    transform: translateY(-1px);
+}
+
+.osu-pill-button:disabled,
+.osu-pill-disabled {
+    background: #d1d5db;
+    color: #4b5563;
+    cursor: default;
+    transform: none;
+}
+
+.osu-primary-button {
+    border: none;
+    border-radius: 8px;
+    padding: 0.55rem 1.1rem;
+    background: var(--osu-orange);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.16s ease, transform 0.08s ease;
+}
+
+.osu-primary-button:hover:not(:disabled) {
+    background: var(--osu-orange-bright);
+    transform: translateY(-1px);
+}
+
+.osu-primary-button:disabled {
+    background: #d1d5db;
+    cursor: default;
+    transform: none;
+}
+
+/* main layout */
+
+.osu-main {
+    padding: 1.5rem 1.75rem 2rem;
+    flex: 1;
+}
+
+.osu-layout-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 320px) minmax(0, 1.5fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .osu-layout-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* cards */
+
+.osu-card {
+    background: var(--osu-surface);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    padding: 1.25rem 1.35rem;
+}
+
+.osu-card-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.osu-card-subtitle {
+    margin: 0.2rem 0 0.8rem;
+    font-size: 0.9rem;
+    color: #374151;
+}
+
+.osu-card-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* stats */
+
+.osu-stat-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.osu-stat {
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 0.6rem 0.8rem;
+}
+
+.osu-stat-label {
+    font-size: 0.75rem;
+    color: #4b5563;
+    font-weight: 600;
+}
+
+.osu-stat-value {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* next appointment */
+
+.osu-next-appt {
+    margin-top: 1rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: 10px;
+    border-left: 4px solid var(--osu-orange);
+    background: #fffbeb;
+}
+
+.osu-next-title {
+    margin: 0 0 0.15rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.osu-next-body {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #1f2937;
+}
+
+.osu-next-time {
+    font-weight: 600;
+    color: #111827;
+}
+
+/* table */
+
+.osu-table-wrapper {
+    margin-top: 0.75rem;
+    border-radius: 10px;
+    border: 1px solid var(--osu-border-soft);
+    overflow: hidden;
+}
+
+.osu-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.osu-table th {
+    background: #e5e7eb;
+    text-align: left;
+    padding: 0.55rem 0.7rem;
+    color: #111827;
+    font-weight: 600;
+}
+
+.osu-table td {
+    padding: 0.5rem 0.7rem;
+    border-top: 1px solid var(--osu-border-soft);
+    color: #111827;
+}
+
+.osu-table tr:nth-child(even) td {
+    background: #f9fafb;
+}
+
+/* text helpers */
+
+.osu-muted {
+    color: var(--osu-muted);
+    font-size: 0.9rem;
+}
+
+.osu-inline-error {
+    color: #b91c1c;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+}
+
+/* forms */
+
+.osu-form {
+    margin-top: 1rem;
+}
+
+/* legacy wrapper */
+
+.background_image,
+.background_image.osu-themed-page {
+    background: var(--osu-bg);
+    color: var(--osu-text-main);
+    min-height: 100vh;
+}
+
+/* login layout */
+
+.osu-login-shell {
+    background: linear-gradient(
+            180deg,
+            rgba(215, 63, 9, 0.08) 0%,
+            rgba(215, 63, 9, 0.03) 40%,
+            #ffffff 100%
+    );
+}
+
+.osu-login-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem 1.5rem 3rem;
+    width: 100%;
+}
+
+.osu-login-card {
+    max-width: 420px;
+    width: 100%;
+}
+
+/* inner login block */
+
+.osu-login-card .login_component_group {
+    background: #f3f4f6;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.osu-login-card input {
+    background: #ffffff;
+    color: #111827;
+    border-radius: 8px;
+}
+
+.osu-login-card button {
+    background: var(--osu-orange);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.osu-login-card label {
+    color: #4b5563;
+}
+
+/* profile & settings */
+
+.osu-profile-card,
+.osu-settings-card {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.osu-profile-details {
+    margin-top: 1rem;
+    display: grid;
+    row-gap: 0.5rem;
+}
+
+.osu-profile-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.osu-profile-row dt {
+    font-weight: 600;
+    color: var(--osu-muted);
+}
+
+.osu-profile-row dd {
+    margin: 0;
+}
+
+.osu-settings-list {
+    margin: 0.75rem 0 0;
+    padding-left: 1.1rem;
+    font-size: 0.9rem;
+    color: var(--osu-text-main);
+}
+
+/* home page */
+
+.osu-home-card {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.osu-home-prompt {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: center;
+}
