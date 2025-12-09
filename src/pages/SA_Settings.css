@@ -1,0 +1,95 @@
+/* Settings Page Styles */
+.settings-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--osu-border-soft);
+}
+
+.settings-section:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.settings-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--osu-text-main);
+    margin: 0 0 1rem 0;
+}
+
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 1rem;
+}
+
+.settings-item:not(:last-child) {
+    border-bottom: 1px solid var(--osu-border-soft);
+}
+
+.settings-item-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.settings-label-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--osu-text-main);
+}
+
+.settings-label-description {
+    font-size: 0.8rem;
+    color: var(--osu-muted);
+}
+
+.settings-item-control {
+    display: flex;
+    align-items: center;
+}
+
+/* Theme Toggle Styles */
+.theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle-label {
+    font-size: 0.85rem;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease;
+    min-width: 40px;
+    text-align: center;
+}
+
+.theme-toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-toggle-slider {
+    position: absolute;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: left 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle-switch:hover {
+    filter: brightness(1.1);
+}
+

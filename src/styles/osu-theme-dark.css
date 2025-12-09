@@ -1,0 +1,442 @@
+/* Dark Theme - Based on App.css color scheme */
+/* Use :root.dark-theme to properly override CSS variables */
+
+:root.dark-theme,
+html.dark-theme {
+    /* Dark theme CSS variables - override light theme */
+    --osu-orange: #D73F09;
+    --osu-orange-bright: #FF6A00;
+    --osu-black: #000000;
+    
+    /* Dark theme colors from App.css */
+    --osu-bg: rgba(10, 18, 18, 1.0); /* dark slate */
+    --osu-surface: rgba(20, 20, 20, 0.9); /* dark slate with transparency */
+    --osu-border-soft: rgba(148, 163, 184, 0.25); /* slate gray border */
+    --osu-text-main: #e5e7eb; /* light gray text */
+    --osu-muted: #94a3b8; /* muted slate */
+    
+    /* Additional dark theme colors */
+    --osu-card-bg: rgba(15, 20, 20, 0.9);
+    --osu-card-border: rgba(148, 163, 184, 0.25);
+    --osu-input-bg: rgba(15, 20, 20, 0.9);
+    --osu-input-border: rgba(148, 163, 184, 0.6);
+    --osu-stat-bg: rgba(30, 41, 59, 0.45);
+    --osu-table-header-bg: rgba(30, 41, 59, 0.6);
+    --osu-table-row-bg: rgba(15, 23, 20, 0.5);
+    
+    /* Blue color overrides - use gray instead */
+    --accent-blue: #6b7280;
+    --accent-blue-light: #9ca3af;
+    --accent-blue-dark: #4b5563;
+    --accent-blue-alpha-12: rgba(107, 114, 128, 0.12);
+    --accent-blue-alpha-15: rgba(107, 114, 128, 0.15);
+    --accent-blue-alpha-20: rgba(75, 85, 99, 0.2);
+    --accent-blue-alpha-30: rgba(75, 85, 99, 0.3);
+    --accent-blue-alpha-50: rgba(107, 114, 128, 0.5);
+}
+
+/* Global body and root overrides - use high specificity */
+:root.dark-theme body,
+html.dark-theme body,
+.dark-theme body {
+    background: var(--osu-bg) !important;
+    color: var(--osu-text-main) !important;
+}
+
+:root.dark-theme html,
+:root.dark-theme body,
+:root.dark-theme #root,
+html.dark-theme html,
+html.dark-theme body,
+html.dark-theme #root {
+    background: var(--osu-bg) !important;
+    color: var(--osu-text-main) !important;
+}
+
+/* shell */
+
+:root.dark-theme .osu-app-shell,
+html.dark-theme .osu-app-shell,
+.dark-theme .osu-app-shell {
+    background: var(--osu-bg) !important;
+}
+
+/* top bar - keep orange but adjust text if needed */
+
+.dark-theme .osu-topbar-subtitle {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* badges - override both osu-theme.css and App.css */
+
+:root.dark-theme .badge-primary,
+html.dark-theme .badge-primary,
+.dark-theme .badge-primary {
+    background: rgba(107, 114, 128, 0.2) !important;
+    color: #d1d5db !important;
+}
+
+.dark-theme .badge-muted {
+    background: rgba(148, 163, 184, 0.25);
+    color: #e1e7ef;
+}
+
+/* quick nav */
+
+.dark-theme .osu-quick-nav {
+    background: rgba(15, 23, 20, 0.6);
+    border-bottom: 1px solid var(--osu-border-soft);
+    backdrop-filter: blur(6px);
+}
+
+.dark-theme .osu-quick-label {
+    color: var(--osu-muted);
+}
+
+/* buttons */
+
+.dark-theme .osu-pill-button:disabled,
+.dark-theme .osu-pill-disabled {
+    background: rgba(148, 163, 184, 0.3);
+    color: #94a3b8;
+}
+
+.dark-theme .osu-primary-button {
+    background: linear-gradient(135deg, #6b7280, #9ca3af);
+    color: #f9fafb;
+    box-shadow: 0 8px 20px rgba(15, 20, 20, 0.7);
+}
+
+.dark-theme .osu-primary-button:hover:not(:disabled) {
+    filter: brightness(1.1);
+}
+
+.dark-theme .osu-primary-button:disabled {
+    background: rgba(148, 163, 184, 0.3);
+}
+
+/* main layout */
+
+.dark-theme .osu-main {
+    background: radial-gradient(circle at top, rgba(15, 15, 15, 1.0), rgba(25, 25, 25, 0.6), rgba(35, 35, 35, 1.0));
+}
+
+/* cards */
+
+.dark-theme .osu-card {
+    background: var(--osu-card-bg);
+    border: 1px solid var(--osu-card-border);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+}
+
+.dark-theme .osu-card-title {
+    color: var(--osu-text-main);
+}
+
+.dark-theme .osu-card-subtitle {
+    color: var(--osu-muted);
+}
+
+/* stats */
+
+.dark-theme .osu-stat {
+    background: var(--osu-stat-bg);
+    border: 1px solid var(--osu-border-soft);
+}
+
+.dark-theme .osu-stat-label {
+    color: var(--osu-muted);
+}
+
+.dark-theme .osu-stat-value {
+    color: var(--osu-text-main);
+}
+
+/* next appointment */
+
+.dark-theme .osu-next-appt {
+    background: rgba(75, 85, 99, 0.15);
+    border: 1px solid rgba(107, 114, 128, 0.3);
+}
+
+.dark-theme .osu-next-title {
+    color: var(--osu-text-main);
+}
+
+.dark-theme .osu-next-body {
+    color: var(--osu-text-main);
+}
+
+.dark-theme .osu-next-time {
+    color: #9ca3af;
+}
+
+/* table */
+
+.dark-theme .osu-table-wrapper {
+    border: 1px solid var(--osu-border-soft);
+    background: var(--osu-card-bg);
+}
+
+.dark-theme .osu-table th {
+    background: var(--osu-table-header-bg);
+    color: #cbd5f5;
+    border-bottom: 1px solid var(--osu-border-soft);
+}
+
+.dark-theme .osu-table td {
+    border-top: 1px solid rgba(51, 65, 85, 0.6);
+    color: var(--osu-text-main);
+}
+
+.dark-theme .osu-table tr:nth-child(even) td {
+    background: var(--osu-table-row-bg);
+}
+
+/* text helpers */
+
+.dark-theme .osu-muted {
+    color: var(--osu-muted);
+}
+
+.dark-theme .osu-inline-error {
+    color: #fecaca;
+}
+
+/* forms */
+
+.dark-theme .osu-form input,
+.dark-theme .osu-form textarea,
+.dark-theme .osu-form select {
+    background: var(--osu-input-bg);
+    color: var(--osu-text-main);
+    border: 1px solid var(--osu-input-border);
+}
+
+.dark-theme .osu-form input:focus,
+.dark-theme .osu-form textarea:focus,
+.dark-theme .osu-form select:focus {
+    outline: 2px solid #6b7280;
+    outline-offset: 1px;
+    border-color: transparent;
+}
+
+.dark-theme .osu-form label {
+    color: #cbd5f5;
+}
+
+/* legacy wrapper */
+
+.dark-theme .background_image,
+.dark-theme .background_image.osu-themed-page {
+    background: radial-gradient(circle at 50% 30%, #0b0f29, #030617 70%);
+    color: var(--osu-text-main);
+    position: relative;
+    overflow: hidden;
+}
+
+.dark-theme .background_image::before {
+    content: "";
+    position: absolute;
+    width: 180%;
+    height: 180%;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(107, 114, 128, 0.12),
+        transparent 70%
+    );
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(30px);
+    animation: slow-spin 22s linear infinite;
+}
+
+@keyframes slow-spin {
+    0% { transform: translate(-20%, -20%) rotate(0deg); }
+    100% { transform: translate(-20%, -20%) rotate(360deg); }
+}
+
+/* login layout */
+
+.dark-theme .osu-login-shell {
+    background: radial-gradient(circle at 50% 30%, rgba(50, 50, 50, 0.9), rgba(35, 35, 35, 0.5) );
+    position: relative;
+    overflow: hidden;
+}
+
+.dark-theme .osu-login-shell::before {
+    content: "";
+    position: absolute;
+    width: 180%;
+    height: 180%;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(107, 114, 128, 0.12),
+        transparent 70%
+    );
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(30px);
+    animation: slow-spin 22s linear infinite;
+}
+
+.dark-theme .osu-login-main {
+    position: relative;
+    z-index: 1;
+}
+
+.dark-theme .osu-login-card {
+    position: relative;
+    z-index: 1;
+}
+
+/* inner login block */
+
+.dark-theme .osu-login-card .login_component_group {
+    background: rgba(30, 41, 59, 0.45);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--osu-border-soft);
+}
+
+.dark-theme .osu-login-card input {
+    background: rgba(15, 23, 23, 0.9);
+    color: var(--osu-text-main);
+    border: 1px solid var(--osu-input-border);
+}
+
+.dark-theme .osu-login-card input:focus {
+    outline: 2px solid #6b7280;
+    outline-offset: 1px;
+    border-color: transparent;
+}
+
+.dark-theme .osu-login-card label {
+    color: var(--osu-muted);
+}
+
+/* profile & settings */
+
+.dark-theme .osu-profile-row dt {
+    color: var(--osu-muted);
+}
+
+.dark-theme .osu-profile-row dd {
+    color: var(--osu-text-main);
+}
+
+.dark-theme .osu-settings-list {
+    color: var(--osu-text-main);
+}
+
+/* Override App.css colors to match dark theme - use maximum specificity */
+/* These must override BOTH App.css AND osu-theme.css */
+/* Using html.dark-theme selector to match how the class is applied */
+
+html.dark-theme .background_image::before {
+    background: radial-gradient(circle,
+        rgba(107, 114, 128, 0.12),
+        transparent 70%
+    ) !important;
+}
+
+html.dark-theme .nav-pill:hover:not(:disabled) {
+    border-color: #6b7280 !important;
+    background: rgba(107, 114, 128, 0.18) !important;
+}
+
+html.dark-theme .primary-button {
+    background: linear-gradient(135deg, #6b7280, #9ca3af) !important;
+}
+
+html.dark-theme .primary-button:hover:not(:disabled) {
+    filter: brightness(1.1) !important;
+}
+
+html.dark-theme .form-input:focus {
+    outline: 2px solid #6b7280 !important;
+    outline-offset: 1px !important;
+    border-color: transparent !important;
+}
+
+/* badge-primary - override both osu-theme.css (uses var(--osu-black)) and App.css (uses grey) */
+html.dark-theme .badge-primary {
+    background: rgba(107, 114, 128, 0.2) !important;
+    color: #d1d5db !important;
+}
+
+/* Additional App.css blue color overrides */
+html.dark-theme .appt-table th {
+    background: rgba(30, 41, 59, 0.6) !important;
+}
+
+html.dark-theme .appt-table tr:hover {
+    background: rgba(51, 65, 85, 0.3) !important;
+}
+
+html.dark-theme .appt-table tr.selected {
+    background: rgba(75, 85, 99, 0.4) !important;
+}
+
+html.dark-theme .appt-table tr.selected:hover {
+    background: rgba(75, 85, 99, 0.5) !important;
+}
+
+html.dark-theme .appt-table tr.selected td {
+    border-color: #6b7280 !important;
+}
+
+html.dark-theme .appt-table tr.selected th {
+    border-color: #6b7280 !important;
+}
+
+html.dark-theme .appt-table tr.selected td:first-child {
+    border-left: 3px solid #6b7280 !important;
+}
+
+html.dark-theme .appt-table tr.selected th:first-child {
+    border-left: 3px solid #6b7280 !important;
+}
+
+html.dark-theme .appt-table tr.selected:hover td {
+    border-color: #9ca3af !important;
+}
+
+html.dark-theme .appt-table tr.selected:hover th {
+    border-color: #9ca3af !important;
+}
+
+html.dark-theme .appt-table tr.selected:hover td:first-child {
+    border-left: 3px solid #9ca3af !important;
+}
+
+html.dark-theme .appt-table tr.selected:hover th:first-child {
+    border-left: 3px solid #9ca3af !important;
+}
+
+/* CRITICAL: badge-primary override - must come at the END to override both osu-theme.css and App.css */
+/* App.css defines: .badge-primary { background: rgba(107, 114, 128, 0.2); color: #d1d5db; } */
+/* osu-theme.css defines: .badge-primary { background: var(--osu-black); color: #fff; } */
+/* This override must win over both */
+html.dark-theme .badge-primary,
+html.dark-theme .badge.badge-primary,
+html.dark-theme span.badge-primary,
+html.dark-theme span.badge.badge-primary {
+    background: rgba(107, 114, 128, 0.2) !important;
+    color: #d1d5db !important;
+}
+
+/* Override dashboard and card backgrounds */
+:root.dark-theme .dashboard,
+html.dark-theme .dashboard,
+.dark-theme .dashboard {
+    background: radial-gradient(circle at top, #020617, #020617 60%, #0b1120 100%) !important;
+}
+
+:root.dark-theme .card,
+html.dark-theme .card,
+.dark-theme .card {
+    background: rgba(15, 20, 20, 0.9) !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+}
+
