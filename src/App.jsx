@@ -18,6 +18,7 @@ const page_routes = [
   { path: "/settings", filename: "SA_Settings" },
   { path: "/calendar", filename: "SA_Calendar" },
   { path: "/profile", filename: "SA_Profile" },
+  { path: "/demo_survey", filename: "SampleAdvisingDemo" },
 ];
 
 // Map filenames → lazy components
