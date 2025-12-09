@@ -4,9 +4,9 @@
   width: 100%;
   margin: 0 auto;
   padding: 16px 20px 24px;
-  background: #ffffff;
+  background: var(--osu-surface);
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Title and subtitle */
@@ -15,7 +15,7 @@
   text-align: center;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--osu-text-main);
 }
 
 .cal-subtitle {
@@ -41,9 +41,9 @@
 }
 
 .cal-nav-btn {
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  color: #111827;
+  background: var(--osu-surface);
+  border: 1px solid var(--osu-border-soft);
+  color: var(--osu-text-main);
   padding: 6px 10px;
   border-radius: 8px;
   cursor: pointer;
@@ -53,21 +53,22 @@
 }
 
 .cal-nav-btn:hover:enabled {
-  border-color: #9ca3af;
-  background: #f3f4f6;
+  border-color: var(--accent-blue);
+  background: var(--accent-blue-alpha-20);
 }
 
 .cal-month-label {
   font-size: 0.95rem;
   font-weight: 600;
   text-align: center;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: var(--osu-surface);
+  border: 1px solid var(--osu-border-soft);
   border-radius: 8px;
   padding: 6px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--osu-text-main);
 }
 
 /* Scroll area with the grid plus form */
@@ -87,13 +88,13 @@
 
 /* Generic day cell */
 .cal-cell {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--osu-border-soft);
   border-radius: 8px;
   min-height: 92px;
   padding: 6px;
   text-align: left;
-  background: #ffffff;
-  color: #111827;
+  background: var(--osu-surface);
+  color: var(--osu-text-main);
 }
 
 .cal-cell.is-clickable {
@@ -101,21 +102,22 @@
 }
 
 .cal-cell.is-clickable:hover {
-  border-color: #9ca3af;
-  background: #f9fafb;
+  border-color: var(--accent-blue);
+  background: var(--accent-blue-alpha-20);
 }
 
 /* Today highlight */
 .cal-cell.is-today {
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue-alpha-50);
 }
 
 /* Day name header cells */
 .cal-cell.cal-head {
   font-weight: 600;
   opacity: 0.9;
-  background: #f3f4f6;
+  background: var(--osu-surface);
+  color: var(--osu-text-main);
 }
 
 /* Cell header with day number and badge */
@@ -132,9 +134,9 @@
 
 /* Badge that shows count of events in a day */
 .cal-badge {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-  color: #1d4ed8;
+  background: var(--accent-blue-alpha-20);
+  border: 1px solid var(--accent-blue);
+  color: var(--osu-text-main);
   border-radius: 999px;
   padding: 0 6px;
   font-size: 0.7rem;
@@ -149,9 +151,9 @@
 }
 
 .cal-event {
-  background: #e0ecff;
-  border: 1px solid #bfdbfe;
-  color: #1e3a8a;
+  background: var(--accent-blue-alpha-20);
+  border: 1px solid var(--accent-blue);
+  color: var(--osu-text-main);
   border-radius: 6px;
   padding: 2px 4px;
   font-size: 0.7rem;
@@ -163,7 +165,7 @@
 .cal-more {
   font-size: 0.7rem;
   opacity: 0.8;
-  color: #4b5563;
+  color: var(--osu-muted);
 }
 
 /* Form at the bottom for creating an event */

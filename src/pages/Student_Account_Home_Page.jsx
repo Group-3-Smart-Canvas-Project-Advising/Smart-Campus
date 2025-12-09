@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AI_Prompt_Field from "../components/AI_Prompt_Field.jsx";
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
+import Avatar from "../components/Avatar.jsx";
 import { useUser } from "../context/UserContext.jsx";
 import { sendMessage } from "../api/chatbot.js";
 import "../styles/osu-theme.css";
+import "../styles/osu-theme-dark.css";
+import "./Student_Account_Home_Page.css";
 
 const Student_Account_Home_Page = () => {
     const { user } = useUser();
@@ -12,19 +15,34 @@ const Student_Account_Home_Page = () => {
     const role = user?.role || "student";
     const name = user?.name || user?.username || "Student";
     const [isLoading, setIsLoading] = useState(false);
-    const [lastResponse, setLastResponse] = useState("");
+    const [chatHistory, setChatHistory] = useState([]);
+    const chatEndRef = useRef(null);
+
+    // Auto-scroll to bottom when new messages are added
+    useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [chatHistory, isLoading]);
 
     const handleChatSubmit = async (message) => {
         if (!message.trim() || isLoading) return;
 
+        // Add user message to history
+        const userMessage = { type: 'user', content: message, timestamp: new Date() };
+        setChatHistory(prev => [...prev, userMessage]);
         setIsLoading(true);
-        setLastResponse("");
 
         try {
             const result = await sendMessage(message, user);
 
             if (result.ok && result.response) {
-                setLastResponse(result.response);
+                // Add assistant response to history
+                const assistantMessage = { 
+                    type: 'assistant', 
+                    content: result.response, 
+                    timestamp: new Date(),
+                    navigation: result.navigation 
+                };
+                setChatHistory(prev => [...prev, assistantMessage]);
 
                 // Handle navigation if the chatbot detected a routing intent
                 if (result.navigation && result.navigation.shouldNavigate) {
@@ -34,11 +52,21 @@ const Student_Account_Home_Page = () => {
                     }, 1000);
                 }
             } else {
-                setLastResponse("I'm sorry, I couldn't process that request. Please try again.");
+                const errorMessage = { 
+                    type: 'assistant', 
+                    content: "I'm sorry, I couldn't process that request. Please try again.",
+                    timestamp: new Date()
+                };
+                setChatHistory(prev => [...prev, errorMessage]);
             }
         } catch (error) {
             console.error("Chatbot error:", error);
-            setLastResponse("I'm sorry, there was an error. Please try again later.");
+            const errorMessage = { 
+                type: 'assistant', 
+                content: "I'm sorry, there was an error. Please try again later.",
+                timestamp: new Date()
+            };
+            setChatHistory(prev => [...prev, errorMessage]);
         } finally {
             setIsLoading(false);
         }
@@ -66,28 +94,54 @@ const Student_Account_Home_Page = () => {
             </span>
                         <span className="badge badge-muted">Demo mode</span>
                     </div>
+                    <Avatar size={40} />
                     <Hamburger_Menu />
                 </div>
             </header>
 
             <main className="osu-main">
                 <section className="osu-card osu-home-card">
-                    <h2 className="osu-card-title">Welcome</h2>
+                    <h2 className="osu-card-title">Smart Advising Assistant</h2>
                     <p className="osu-card-subtitle">
                         Ask a question about classes, advising, or campus resources and the assistant will help.
                     </p>
 
-                    {lastResponse && (
-                        <div className="osu-chat-response" style={{
-                            marginBottom: "1rem",
-                            padding: "1rem",
-                            backgroundColor: "#f3f4f6",
-                            borderRadius: "8px",
-                            border: "1px solid #e5e7eb"
-                        }}>
-                            <p style={{ margin: 0, color: "#1f2937" }}>{lastResponse}</p>
-                        </div>
-                    )}
+                    {/* Chat History */}
+                    <div className="chat-history-container">
+                        {chatHistory.length === 0 ? (
+                            <div className="chat-empty-state">
+                                <p className="chat-empty-text">Start a conversation by asking a question below.</p>
+                            </div>
+                        ) : (
+                            <div className="chat-messages">
+                                {chatHistory.map((message, index) => (
+                                    <div 
+                                        key={index} 
+                                        className={`chat-message chat-message-${message.type}`}
+                                    >
+                                        <div className="chat-message-content">
+                                            {message.content}
+                                        </div>
+                                        {message.navigation && message.navigation.shouldNavigate && (
+                                            <div className="chat-navigation-hint">
+                                                Navigating to {message.navigation.route}...
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                                {isLoading && (
+                                    <div className="chat-message chat-message-assistant">
+                                        <div className="chat-message-content chat-loading">
+                                            <span className="chat-typing-indicator">●</span>
+                                            <span className="chat-typing-indicator">●</span>
+                                            <span className="chat-typing-indicator">●</span>
+                                        </div>
+                                    </div>
+                                )}
+                                <div ref={chatEndRef} />
+                            </div>
+                        )}
+                    </div>
 
                     <div className="osu-home-prompt">
                         <AI_Prompt_Field 

@@ -2,10 +2,13 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import "./App.css";
+// Import dark theme AFTER App.css so it can override blue colors
+import "./styles/osu-theme-dark.css";
 import Text_Input_Field from "./components/Text_Input_Field.jsx";
 import Login_Button from "./components/Login_Button.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import { UserContext } from "./context/UserContext.jsx";
+import { useTheme } from "./context/ThemeContext.jsx";
 import { listForUser } from "./api/appointments.js";
 import LoadingBar from "./components/LoadingBar.jsx";
 
@@ -32,6 +35,7 @@ const LoginPage = ({ onLogin }) => {
   const [password, set_Password] = useState("");
   const [is_loading, set_is_loading] = useState(false);
   const [useServerMode, setUseServerMode] = useState(false); // false = mock, true = db
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handle_login_submit = async (event) => {
@@ -103,7 +107,7 @@ const LoginPage = ({ onLogin }) => {
           <section className="osu-card osu-login-card">
             <h2 className="osu-card-title">Sign in</h2>
             <p className="osu-card-subtitle">
-              Use your demo username and password to access the advising tools.
+              Use your username and password to access the advising tools.
             </p>
 
             <form onSubmit={handle_login_submit}>
@@ -149,7 +153,7 @@ const LoginPage = ({ onLogin }) => {
                   >
                     <label
                         style={{
-                          color: "#4b5563",
+                          color: theme === 'dark' ? "#94a3b8" : "#4b5563",
                           fontSize: "0.85rem",
                           cursor: "pointer",
                           userSelect: "none",
@@ -164,12 +168,14 @@ const LoginPage = ({ onLogin }) => {
                           width: "50px",
                           height: "26px",
                           backgroundColor: useServerMode
-                              ? "#38bdf8"
-                              : "rgba(148, 163, 184, 0.5)",
+                              ? (theme === 'dark' ? "#6b7280" : "#38bdf8")
+                              : (theme === 'dark' ? "rgba(75, 85, 99, 0.4)" : "rgba(148, 163, 184, 0.5)"),
                           borderRadius: "13px",
                           cursor: "pointer",
                           transition: "background-color 0.3s ease",
-                          border: "1px solid rgba(148, 163, 184, 0.3)",
+                          border: theme === 'dark' 
+                              ? "1px solid rgba(107, 114, 128, 0.4)" 
+                              : "1px solid rgba(148, 163, 184, 0.3)",
                         }}
                     >
                       <div
@@ -188,13 +194,75 @@ const LoginPage = ({ onLogin }) => {
                     </div>
                     <label
                         style={{
-                          color: "#4b5563",
+                          color: theme === 'dark' ? "#94a3b8" : "#4b5563",
                           fontSize: "0.85rem",
                           cursor: "pointer",
                           userSelect: "none",
                         }}
                     >
                       Server mode
+                    </label>
+                  </div>
+
+                  {/* Theme toggle: light ↔ dark */}
+                  <div
+                      style={{
+                        padding: "8px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "12px",
+                        marginTop: "4px",
+                      }}
+                  >
+                    <label
+                        style={{
+                          color: theme === 'dark' ? "#94a3b8" : "#4b5563",
+                          fontSize: "0.85rem",
+                          cursor: "pointer",
+                          userSelect: "none",
+                        }}
+                    >
+                      Light
+                    </label>
+                    <div
+                        onClick={toggleTheme}
+                        style={{
+                          position: "relative",
+                          width: "50px",
+                          height: "26px",
+                          backgroundColor: theme === 'dark'
+                              ? "#6b7280"
+                              : "rgba(148, 163, 184, 0.5)",
+                          borderRadius: "13px",
+                          cursor: "pointer",
+                          transition: "background-color 0.3s ease",
+                          border: "1px solid rgba(148, 163, 184, 0.3)",
+                        }}
+                    >
+                      <div
+                          style={{
+                            position: "absolute",
+                            top: "2px",
+                            left: theme === 'dark' ? "26px" : "2px",
+                            width: "20px",
+                            height: "20px",
+                            backgroundColor: "#fff",
+                            borderRadius: "50%",
+                            transition: "left 0.3s ease",
+                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                          }}
+                      />
+                    </div>
+                    <label
+                        style={{
+                          color: theme === 'dark' ? "#94a3b8" : "#4b5563",
+                          fontSize: "0.85rem",
+                          cursor: "pointer",
+                          userSelect: "none",
+                        }}
+                    >
+                      Dark
                     </label>
                   </div>
                 </div>

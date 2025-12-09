@@ -1,7 +1,7 @@
 .avatar {
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--osu-border-soft);
+  background: var(--osu-surface);
   display: block; /* prevent inline-img baseline offset */
   object-fit: cover;
 }
@@ -10,6 +10,7 @@
 .avatar-wrap {
   position: relative;
   display: inline-block;
+  flex-shrink: 0;
 }
 
 /* Sticky positioning (like hamburger menu) */
@@ -36,8 +37,8 @@
   top: calc(100% + 8px);
   left: 0;
   min-width: 180px;
-  background: rgba(2, 6, 23, 0.95); /* near-black */
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--osu-card-bg);
+  border: 1px solid var(--osu-card-border);
   border-radius: 10px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 10;
@@ -50,7 +51,7 @@
   text-align: left;
   background: transparent;
   border: none;
-  color: #e5e7eb;
+  color: var(--osu-text-main);
   font-size: 14px;
   padding: 8px 10px;
   border-radius: 8px;
@@ -60,5 +61,5 @@
 .avatar-menu-item:hover,
 .avatar-menu-item:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--accent-blue-alpha-20);
 }

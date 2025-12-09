@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./SA_Calendar.css";
 import "../styles/osu-theme.css";
+import "../styles/osu-theme-dark.css";
 
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
 import Avatar from "../components/Avatar.jsx";
@@ -207,6 +208,7 @@ const SA_Calendar = () => {
             </span>
               <span className="badge badge-muted">Demo mode</span>
             </div>
+            <Avatar size={40} />
             <Hamburger_Menu />
           </div>
         </header>
@@ -216,10 +218,6 @@ const SA_Calendar = () => {
               className="calendar-inner"
               aria-busy={isDataLoading ? "true" : undefined}
           >
-            <div className="cal-header">
-              <Avatar size={40} sticky />
-            </div>
-
             <h2 className="cal-title">Calendar</h2>
 
             <div className="cal-nav">

@@ -6,27 +6,47 @@
     position: relative;
 }
 
+.prompt-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
 .ai-prompt-field {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
+    flex: 1;
+    padding: 12px 64px 12px 12px; /* Right padding: 12px base + 32px button + 20px button margin = 64px */
+    border: 2px solid var(--osu-input-border);
     border-radius: 8px;
     font-size: 16px;
     font-family: inherit;
-    resize: vertical;
-    min-height: 80px;
-    transition: border-color 0.2s;
+    resize: none;
+    min-height: 48px;
+    max-height: 200px;
+    transition: border-color 0.2s, outline 0.2s;
     z-index: 10;
+    background-color: var(--osu-input-bg);
+    color: var(--osu-text-main);
+    line-height: 1.5;
+    overflow-y: auto;
+    /* Custom scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: var(--osu-muted) transparent;
+}
 
+.ai-prompt-field::placeholder {
+    color: var(--osu-muted);
 }
 
 .ai-prompt-field:focus {
-    outline: none;
-    border-color: #007bff;
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 1px;
+    border-color: transparent;
 }
 
 .ai-prompt-field:disabled {
-    background-color: #f5f5f5;
+    background-color: var(--osu-input-bg);
+    opacity: 0.6;
     cursor: not-allowed;
 }
 
@@ -39,24 +59,63 @@
 
 .character-count {
     font-size: 12px;
-    color: #666;
+    color: var(--osu-muted);
 }
 
-.submit-button {
-    padding: 8px 24px;
-    background-color: #007bff;
+.submit-button-arrow {
+    position: absolute;
+    right: 20px; /* Increased from 8px to account for scrollbar width (typically 15-17px) */
+    bottom: 8px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light));
     color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 0.2s, transform 0.1s;
+    flex-shrink: 0;
+    z-index: 11; /* Ensure button is above scrollbar */
 }
 
-.submit-button:hover:not(:disabled) {
-    background-color: #0056b3;
+.submit-button-arrow:hover:not(:disabled) {
+    filter: brightness(1.1);
+    transform: scale(1.05);
 }
 
-.submit-button:disabled {
-    background-color: #ccc;
+.submit-button-arrow:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.submit-button-arrow:disabled {
+    background: var(--osu-muted);
     cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.submit-button-arrow svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Custom scrollbar styling for textarea to ensure it doesn't overlap button */
+.ai-prompt-field::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ai-prompt-field::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ai-prompt-field::-webkit-scrollbar-thumb {
+    background: var(--osu-muted);
+    border-radius: 4px;
+}
+
+.ai-prompt-field::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-blue);
 }

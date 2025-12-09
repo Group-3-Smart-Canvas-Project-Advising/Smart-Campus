@@ -7,6 +7,16 @@
     --osu-border-soft: #E5E5E5;
     --osu-text-main: #1A1A1A;
     --osu-muted: #6B7280;
+    
+    /* Accent colors (grey) for light theme */
+    --accent-blue: #6b7280;
+    --accent-blue-light: #9ca3af;
+    --accent-blue-dark: #4b5563;
+    --accent-blue-alpha-12: rgba(107, 114, 128, 0.12);
+    --accent-blue-alpha-15: rgba(107, 114, 128, 0.15);
+    --accent-blue-alpha-20: rgba(107, 114, 128, 0.2);
+    --accent-blue-alpha-30: rgba(107, 114, 128, 0.3);
+    --accent-blue-alpha-50: rgba(107, 114, 128, 0.5);
 }
 
 /* global */
@@ -46,6 +56,8 @@ body {
     align-items: center;
     justify-content: space-between;
     border-bottom: 4px solid var(--osu-black);
+    position: relative;
+    z-index: 100;
 }
 
 .osu-topbar-left {
@@ -81,7 +93,8 @@ body {
 .osu-topbar-right {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
+    flex-wrap: nowrap;
 }
 
 /* badges */

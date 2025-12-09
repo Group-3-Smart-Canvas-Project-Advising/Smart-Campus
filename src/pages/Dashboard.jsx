@@ -3,7 +3,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../context/UserContext.jsx";
 import { create as createAppt, updateStatus } from "../api/appointments.js";
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
+import Avatar from "../components/Avatar.jsx";
 import "../styles/osu-theme.css";
+import "../styles/osu-theme-dark.css";
 
 export default function Dashboard({ user }) {
   const navigate = useNavigate();
@@ -130,6 +132,7 @@ export default function Dashboard({ user }) {
             </span>
               <span className="badge badge-muted">Demo mode</span>
             </div>
+            <Avatar size={40} />
             <Hamburger_Menu />
           </div>
         </header>

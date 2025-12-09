@@ -1,9 +1,10 @@
 import React from "react";
 import "./SA_Profile.css";
-import ProfileIcon from "/profile.svg";
 import Hamburger_Menu from "../components/Hamburger_Menu.jsx";
+import Avatar from "../components/Avatar.jsx";
 import { useUser } from "../context/UserContext.jsx";
 import "../styles/osu-theme.css";
+import "../styles/osu-theme-dark.css";
 
 const SA_Profile = () => {
     const { user } = useUser();
@@ -35,6 +36,7 @@ const SA_Profile = () => {
               {mode === "db" ? "Server mode" : "Demo mode"}
             </span>
                     </div>
+                    <Avatar size={40} />
                     <Hamburger_Menu />
                 </div>
             </header>
@@ -50,11 +52,9 @@ const SA_Profile = () => {
                                     : "Your student profile"}
                             </p>
                         </div>
-                        <img
-                            src={ProfileIcon}
-                            alt="Profile"
-                            className="default_profile_icon"
-                        />
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <Avatar size={80} alt={name} />
+                        </div>
                     </div>
 
                     <dl className="osu-profile-details">
